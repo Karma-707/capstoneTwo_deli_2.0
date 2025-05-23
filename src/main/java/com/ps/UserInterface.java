@@ -9,9 +9,8 @@ import java.util.Scanner;
 public class UserInterface {
     private static Scanner scanner = new Scanner(System.in);
     private static Order order;
-    private static List<Product> shoppingCart;
 
-    //start to create a deli
+    //start to create an order
     public static void init() {
         order = new Order();
         display();
@@ -23,11 +22,11 @@ public class UserInterface {
     }
 
     //TODO: add each order to user shopping
-    private static void addOrder() {
+    private static void addProduct() {
 
     }
 
-    //TODO: checkout user items in shoppingCart
+    //TODO: checkout user items in order
     private static void checkOut() {
 
     }
