@@ -1,6 +1,6 @@
 package com.ps;
 
-import com.ps.core.DeliStore;
+import com.ps.core.Order;
 import com.ps.core.Product;
 
 import java.util.List;
@@ -8,12 +8,12 @@ import java.util.Scanner;
 
 public class UserInterface {
     private static Scanner scanner = new Scanner(System.in);
-    private static DeliStore deliStore;
+    private static Order order;
     private static List<Product> shoppingCart;
 
     //start to create a deli
     public static void init() {
-        deliStore = new DeliStore();
+        order = new Order();
         display();
     }
 
