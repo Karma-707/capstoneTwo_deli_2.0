@@ -21,8 +21,6 @@ public abstract class Topping {
 
     @Override
     public String toString() {
-        return "Topping{" +
-                "name='" + name + '\'' +
-                '}';
+        return name;
     }
 }

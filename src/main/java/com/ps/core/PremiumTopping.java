@@ -20,10 +20,4 @@ public class PremiumTopping extends Topping{
 
 
 
-    @Override
-    public String toString() {
-        return "PremiumTopping{" +
-                "price=" + price +
-                '}';
-    }
 }
