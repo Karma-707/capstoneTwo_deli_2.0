@@ -99,6 +99,11 @@ public class UserInterface {
                 System.out.println("❌ Invalid selection.");
             }
         } while(chipSelected != 0);
+
+        //add chips to products
+        for(Chip chip: chosenChips) {
+            order.addProduct(chip);
+        }
     }
 
     //add drink to order
@@ -127,6 +132,10 @@ public class UserInterface {
             }
         } while(drinkSelected != 0);
 
+        //add drinks to products
+        for(Drink drink: chosenDrinks) {
+            order.addProduct(drink);
+        }
     }
 
     //add sandwich to order
@@ -229,6 +238,9 @@ public class UserInterface {
         //print out the sandwich so far
         System.out.println(sandwich);
         //make the list editable if they want to change anything
+
+        //final sandwich add to products
+        order.addProduct(sandwich);
     }
 
 
