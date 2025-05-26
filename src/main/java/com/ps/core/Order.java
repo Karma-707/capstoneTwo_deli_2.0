@@ -26,16 +26,14 @@ public class Order {
             new Chip("SunChips Garden Salsa", 1.50)
     );
 
+    //constructor
+    public Order() {
+    }
+
     //add a product
     public void addProduct(Product product) {
         products.add(product);
     }
-
-    //get all products
-    public List<Product> getAllProducts() {
-        return products;
-    }
-
 
     //getters & setters
     public List<Product> getProducts() {
@@ -65,7 +63,9 @@ public class Order {
 
 
     //TODO: generate receipt of products order
-    public void generateReceipt() {}
+    public String generateReceipt() {
+        return "";
+    }
 
     //TODO: calculate all product prices
     public void calcPrice() {}

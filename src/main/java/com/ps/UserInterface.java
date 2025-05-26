@@ -62,6 +62,7 @@ public class UserInterface {
                     addChipProcess();
                     break;
                 case 4: //checkout
+                    checkoutProcess();
                     break;
                 case 0:
                     System.out.println("Going back to home screen");
@@ -71,6 +72,34 @@ public class UserInterface {
             }
 
         } while(orderMenuCommand != 0);
+
+    }
+
+    //checkout user order
+    private static void checkoutProcess() {
+        //print list of products user ordered
+        if(order.getProducts().isEmpty()) {
+            System.out.println("⚠️ Your order is empty. Add something first.");
+            return;
+        }
+
+        System.out.println("\n🧾 Here’s your order summary:");
+        System.out.println(order.generateReceipt());
+
+        System.out.println("Confirm and place your order?");
+        System.out.println("Press [1] ➤ Yes, confirm order");
+        System.out.println("Press [2] ➤ No, still want to shop.");
+        System.out.print("👉 Your choice: ");
+        int orderCommand = scanner.nextInt();
+
+        if(orderCommand == 1) {
+            FileManager.writeReceipt(order);
+            System.out.println("🧾 Your receipt has been saved. Thank you for your order!");
+        }
+        else {
+            //requirement says to delete order?
+            System.out.println("Checkout cancelled. Go back and edit your order");
+        }
 
     }
 
