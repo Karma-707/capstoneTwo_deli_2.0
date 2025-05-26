@@ -27,8 +27,6 @@ public class Drink implements Product{
         this.price = price;
     }
 
-
-
     @Override
     public double calcPrice() {
         return this.price;

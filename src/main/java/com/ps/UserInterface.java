@@ -1,8 +1,6 @@
 package com.ps;
 
-import com.ps.core.Order;
-import com.ps.core.Sandwich;
-import com.ps.core.Topping;
+import com.ps.core.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,11 +37,7 @@ public class UserInterface {
                     System.out.println("⚠️ Invalid input, please try again");
             }
 
-
-
         } while(homeScreenCommand != 0);
-
-
 
     }
 
@@ -62,10 +56,15 @@ public class UserInterface {
                     addSandwichProcess();
                     break;
                 case 2: //add drink
+                    addDrinkProcess();
                     break;
                 case 3: //add chips
+                    addChipProcess();
                     break;
                 case 4: //checkout
+                    break;
+                case 0:
+                    System.out.println("Going back to home screen");
                     break;
                 default:
                     System.out.println("⚠️ Invalid input, please try again");
@@ -73,7 +72,60 @@ public class UserInterface {
 
         } while(orderMenuCommand != 0);
 
+    }
 
+    //add chip to order
+    private static void addChipProcess() {
+        List<Chip> allChips = order.getChipList();
+        List<Chip> chosenChips = new ArrayList<>();
+        int chipSelected;
+        do {
+            System.out.println("\nWant a drink?");
+            for (int i = 0; i < allChips.size(); i++) {
+                System.out.printf("Press [%d] ➤ %-15s\n", i + 1, allChips.get(i).getName());
+            }
+            System.out.println("Press [0] ➤ Done");
+
+            System.out.print("👉 Select your beverage: ");
+            chipSelected = scanner.nextInt();
+            if(chipSelected >= 1 && chipSelected <= allChips.size()) {
+                chosenChips.add(allChips.get(chipSelected - 1));
+                System.out.println(allChips.get(chipSelected - 1).getName() + " added.");
+            }
+            else if (chipSelected == 0) {
+                break;
+            }
+            else {
+                System.out.println("❌ Invalid selection.");
+            }
+        } while(chipSelected != 0);
+    }
+
+    //add drink to order
+    private static void addDrinkProcess() {
+        List<Drink> allDrinks = order.getDrinkList();
+        List<Drink> chosenDrinks = new ArrayList<>();
+        int drinkSelected;
+        do {
+            System.out.println("\nWant a drink?");
+            for (int i = 0; i < allDrinks.size(); i++) {
+                System.out.printf("Press [%d] ➤ %-15s\n", i + 1, allDrinks.get(i).getName());
+            }
+            System.out.println("Press [0] ➤ Done");
+
+            System.out.print("👉 Select your beverage: ");
+            drinkSelected = scanner.nextInt();
+            if(drinkSelected >= 1 && drinkSelected <= allDrinks.size()) {
+                chosenDrinks.add(allDrinks.get(drinkSelected - 1));
+                System.out.println(allDrinks.get(drinkSelected - 1).getName() + " added.");
+            }
+            else if (drinkSelected == 0) {
+                break;
+            }
+            else {
+                System.out.println("❌ Invalid selection.");
+            }
+        } while(drinkSelected != 0);
 
     }
 
@@ -192,7 +244,7 @@ public class UserInterface {
 
     //print home screen menu options
     private static void printHomeScreenMenu() {
-        System.out.println("\nWelcome to No Longer Bungry");
+        System.out.println("\nWelcome to The Case of the Missing Sandwich");
         System.out.println("What would you like to do?");
         System.out.println("Press [1] ➤ New Order");
         System.out.println("Press [0] ➤ Exit");

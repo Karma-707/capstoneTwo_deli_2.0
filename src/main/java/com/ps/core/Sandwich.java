@@ -33,10 +33,10 @@ public class Sandwich implements Product{
             new PremiumTopping("Roast Beef"),
             new PremiumTopping("Chicken"),
             new PremiumTopping("Bacon"),
-            new PremiumTopping("American"),
-            new PremiumTopping("Provolone"),
-            new PremiumTopping("Cheddar"),
-            new PremiumTopping("Swiss")
+            new PremiumTopping("American Cheese"),
+            new PremiumTopping("Provolone Cheese"),
+            new PremiumTopping("Cheddar Cheese"),
+            new PremiumTopping("Swiss Cheese")
     );
     private boolean isToasted;
 

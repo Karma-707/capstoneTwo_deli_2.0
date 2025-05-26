@@ -37,6 +37,33 @@ public class Order {
     }
 
 
+    //getters & setters
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
+    }
+
+    public List<Drink> getDrinkList() {
+        return drinkList;
+    }
+
+    public void setDrinkList(List<Drink> drinkList) {
+        this.drinkList = drinkList;
+    }
+
+    public List<Chip> getChipList() {
+        return chipList;
+    }
+
+    public void setChipList(List<Chip> chipList) {
+        this.chipList = chipList;
+    }
+
+
+
     //TODO: generate receipt of products order
     public void generateReceipt() {}
 
