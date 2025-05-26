@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class UserInterface {
-    private static Scanner scanner = new Scanner(System.in);
+    private static final Scanner scanner = new Scanner(System.in);
     private static Order order;
 
     //start to create an order
@@ -82,7 +82,7 @@ public class UserInterface {
         Sandwich sandwich = new Sandwich();
         System.out.println("\nReady to start building your sandwich? Let's go!");
 
-        //choose bread type
+        //select bread type
         System.out.println("\nAvailable Bread Types");
         List<String> allBreads = sandwich.getOfferedBread();
         //print all bread types
@@ -94,12 +94,12 @@ public class UserInterface {
         String chosenBread = allBreads.get(breadSelected-1); //name of bread they selected
         sandwich.setSelectedBread(chosenBread); //put bread in sandwich
 
-        //choose size
+        //select size
         System.out.println("\nChoose sandwich size:");
         List<Integer> allSize = sandwich.getOfferedSizes();
         //print all bread size
         for(int i = 0; i < allSize.size(); i++) {
-            System.out.printf("Press [%d] ➤ %-7s\n", i+1, allSize.get(i));
+            System.out.printf("Press [%d] ➤ %-2s inches\n", i+1, allSize.get(i));
         }
         System.out.print("👉 Select your size: ");
         int sizeSelected = scanner.nextInt(); //grab user choice of bread
@@ -135,12 +135,12 @@ public class UserInterface {
             //check num times topping appears in chosenToppings list
             for (int i = 0; i < chosenToppings.size(); i++) {
                 String currentToppingName = chosenToppings.get(i).getName();
-                if (currentToppingName.toLowerCase().equalsIgnoreCase(chosenToppingName.toLowerCase())) {
+                if (currentToppingName.equalsIgnoreCase(chosenToppingName)) {
                     count++;
                 }
             }
 
-            //if the count is <= 2 then they can add, else reject and loop
+            //allow to add topping if less than 2 toppings on sandwich, else reject + loop till exit
             if (count < 2) {
                 chosenToppings.add(chosenTopping);
                 System.out.println(chosenTopping.getName() + " added to your sandwich.");
@@ -149,6 +149,34 @@ public class UserInterface {
             }
 
         } while(toppingSelected != 0);
+        sandwich.setSelectedToppings(chosenToppings);
+
+        //select sauces
+        List<String> chosenSauces = new ArrayList<>();
+        System.out.println("\nAdd sauces");
+        List<String> allSauces = sandwich.getOfferedSauces(); //get all sauces
+        for(int i = 0; i < allSauces.size(); i++) {
+            System.out.printf("Press [%d] ➤ %-10s\n", i+1, allSauces.get(i));
+        }
+        System.out.print("👉 Select your sauce: ");
+        int sauceSelected = scanner.nextInt(); //grab user choice of sauce
+        chosenSauces.add(allSauces.get(sauceSelected-1)); //name of sauce selected added to list
+        sandwich.setSelectedSauces(chosenSauces); //put sauce in sandwich
+
+        //select toasted
+        System.out.println("\nWould you like your sandwich toasted?");
+        System.out.println("Press [1] ➤ Yes, toast it");
+        System.out.println("Press [2] ➤ No, leave it untoasted");
+        System.out.print("👉 Your choice: ");
+
+        int toastSelected = scanner.nextInt(); //grab user choice to toast
+        boolean chosenToast = (toastSelected == 1); //toasted of bread
+        //TODO: validate choice for other
+        sandwich.setToasted(chosenToast); //put size in sandwich
+
+        //print out the sandwich so far
+        System.out.println(sandwich);
+        //make the list editable if they want to change anything
     }
 
 

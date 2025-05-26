@@ -26,8 +26,16 @@ public class Order {
             new Chip("SunChips Garden Salsa", 1.50)
     );
 
-    //add product
+    //add a product
+    public void addProduct(Product product) {
+        products.add(product);
+    }
+
     //get all products
+    public List<Product> getAllProducts() {
+        return products;
+    }
+
 
     //TODO: generate receipt of products order
     public void generateReceipt() {}

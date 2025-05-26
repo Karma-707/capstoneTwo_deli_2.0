@@ -4,9 +4,8 @@ public class PremiumTopping extends Topping{
     private double price;
 
     //constructor
-    public PremiumTopping(String name, double price) {
+    public PremiumTopping(String name) {
         super(name);
-        this.price = price;
     }
 
     //getters & setters
