@@ -34,4 +34,12 @@ public class Chip implements Product{
     public double calcPrice() {
         return this.price;
     }
+
+    @Override
+    public String toString() {
+        return "Chip{" +
+                "name='" + name + '\'' +
+                ", price=" + price +
+                '}';
+    }
 }

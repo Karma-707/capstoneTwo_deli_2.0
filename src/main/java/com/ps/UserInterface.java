@@ -78,12 +78,12 @@ public class UserInterface {
     //checkout user order
     private static void checkoutProcess() {
         //print list of products user ordered
-        if(order.getProducts().isEmpty()) {
+        if(order.getProducts() == null || order.getProducts().isEmpty()) {
             System.out.println("⚠️ Your order is empty. Add something first.");
             return;
         }
 
-        System.out.println("\n🧾 Here’s your order summary:");
+//        System.out.println("\n🧾 Here’s your order summary:");
         System.out.println(order.generateReceipt());
 
         System.out.println("Confirm and place your order?");

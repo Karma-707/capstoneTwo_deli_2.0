@@ -31,4 +31,12 @@ public class Drink implements Product{
     public double calcPrice() {
         return this.price;
     }
+
+    @Override
+    public String toString() {
+        return "Drink{" +
+                "name='" + name + '\'' +
+                ", price=" + price +
+                '}';
+    }
 }

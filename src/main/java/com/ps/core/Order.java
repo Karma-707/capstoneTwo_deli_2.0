@@ -1,10 +1,11 @@
 package com.ps.core;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class Order {
-    private List<Product> products;
+    private List<Product> products = new ArrayList<>();
     private List<Drink> drinkList = Arrays.asList(
             new Drink("Coca-Cola", 1.50),
             new Drink("Diet Coke", 1.50),
@@ -64,7 +65,16 @@ public class Order {
 
     //TODO: generate receipt of products order
     public String generateReceipt() {
-        return "";
+        StringBuilder receipt = new StringBuilder();
+        double total = 0;
+        receipt.append("\n🧾 Here’s your order summary:\n");
+        for(Product product: products) {
+            receipt.append(product).append("\n");
+            //TODO: get a separate method to getPrice after calcPrice?
+        }
+
+        receipt.append(String.format("Total: $%.2f\n", total));
+        return receipt.toString();
     }
 
     //TODO: calculate all product prices
