@@ -7,7 +7,6 @@ public class Drink implements Product{
     //constructor
     public Drink(String name, double price) {
         this.name = name;
-        this.price = price;
     }
 
     //getters & setters
@@ -19,14 +18,24 @@ public class Drink implements Product{
         this.name = name;
     }
 
-    public double getPrice() {
-        return price;
+    public void updatePrice(String breadSize) {
+
+        switch (breadSize) {
+            case "Small":
+                this.price = 2;
+                break;
+            case "Medium":
+                this.price = 2.5;
+                break;
+            case "Large":
+                this.price = 3;
+                break;
+            default:
+        }
+
     }
 
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
+    //FIXME: do i need this?
     @Override
     public double calcPrice() {
         return this.price;

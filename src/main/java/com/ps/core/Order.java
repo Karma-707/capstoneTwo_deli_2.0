@@ -17,14 +17,14 @@ public class Order {
             new Drink("Iced Tea", 1.75)
     );
     private List<Chip> chipList = Arrays.asList(
-            new Chip("Lays Classic", 1.25),
-            new Chip("Lays BBQ", 1.25),
-            new Chip("Lays Sour Cream & Onion", 1.25),
-            new Chip("Doritos Nacho Cheese", 1.50),
-            new Chip("Doritos Cool Ranch", 1.50),
-            new Chip("Cheetos Crunchy", 1.50),
-            new Chip("Ruffles Original", 1.25),
-            new Chip("SunChips Garden Salsa", 1.50)
+            new Chip("Lays Classic"),
+            new Chip("Lays BBQ"),
+            new Chip("Lays Sour Cream & Onion"),
+            new Chip("Doritos Nacho Cheese"),
+            new Chip("Doritos Cool Ranch"),
+            new Chip("Cheetos Crunchy"),
+            new Chip("Ruffles Original"),
+            new Chip("SunChips Garden Salsa")
     );
 
     //constructor

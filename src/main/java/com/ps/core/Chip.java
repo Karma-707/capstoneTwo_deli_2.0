@@ -2,12 +2,11 @@ package com.ps.core;
 
 public class Chip implements Product{
     private String name;
-    private double price;
+    private double price = 1.50;
 
     //constructor
-    public Chip(String name, double price) {
+    public Chip(String name) {
         this.name = name;
-        this.price = price;
     }
 
 
@@ -20,16 +19,12 @@ public class Chip implements Product{
         this.name = name;
     }
 
-    public double getPrice() {
-        return price;
-    }
-
     public void setPrice(double price) {
         this.price = price;
     }
 
 
-
+    //FIXME: do i need this?
     @Override
     public double calcPrice() {
         return this.price;
