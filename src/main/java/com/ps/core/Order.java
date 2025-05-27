@@ -69,8 +69,10 @@ public class Order {
         double total = 0;
         receipt.append("\n🧾 Here’s your order summary:\n");
         for(Product product: products) {
-            receipt.append(product).append("\n");
-            //TODO: get a separate method to getPrice after calcPrice?
+            receipt.append(product);
+            double price = product.calcPrice();
+            receipt.append(String.format(" $%.2f\n", price));
+            total += price; //add to total of order
         }
 
         receipt.append(String.format("Total: $%.2f\n", total));

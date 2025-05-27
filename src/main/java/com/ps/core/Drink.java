@@ -18,9 +18,9 @@ public class Drink implements Product{
         this.name = name;
     }
 
-    public void updatePrice(String breadSize) {
+    public void updatePrice(String drinkSize) {
 
-        switch (breadSize) {
+        switch (drinkSize) {
             case "Small":
                 this.price = 2;
                 break;

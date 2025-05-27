@@ -77,19 +77,19 @@ public class Sandwich implements Product{
             case 4:
                 breadPrice = 5.50;
                 for(Topping topping: selectedToppings) {
-                    if(selectedToppings instanceof PremiumTopping premiumTopping) {
+                    if(topping instanceof PremiumTopping premiumTopping) {
                         //cheese
                         if(premiumTopping.getName().toLowerCase().contains("cheese")) {
                             cheesePrice = premiumTopping.getPrice(selectedSize);
                             if(extraCheese) {
-                                extraCheesePrice = 0.30;
+                                extraCheesePrice += 0.30;
                             }
                         }
                         //meat
                         else {
                             meatPrice = premiumTopping.getPrice(selectedSize);
-                            if(extraCheese) {
-                                extraMeatPrice = 0.50;
+                            if(extraMeat) {
+                                extraMeatPrice += 0.50;
                             }
                         }
                     }
@@ -99,19 +99,19 @@ public class Sandwich implements Product{
             case 8:
                 breadPrice = 7.00;
                 for(Topping topping: selectedToppings) {
-                    if(selectedToppings instanceof PremiumTopping premiumTopping) {
+                    if(topping instanceof PremiumTopping premiumTopping) {
                         //cheese
                         if(premiumTopping.getName().toLowerCase().contains("cheese")) {
                             cheesePrice = premiumTopping.getPrice(selectedSize);
                             if(extraCheese) {
-                                extraCheesePrice = 0.60;
+                                extraCheesePrice += 0.60;
                             }
                         }
                         //meat
                         else {
                             meatPrice = premiumTopping.getPrice(selectedSize);
-                            if(extraCheese) {
-                                extraMeatPrice = 1.00;
+                            if(extraMeat) {
+                                extraMeatPrice += 1.00;
                             }
                         }
                     }
@@ -121,19 +121,19 @@ public class Sandwich implements Product{
             case 12:
                 breadPrice = 8.50;
                 for(Topping topping: selectedToppings) {
-                    if(selectedToppings instanceof PremiumTopping premiumTopping) {
+                    if(topping instanceof PremiumTopping premiumTopping) {
                         //cheese
                         if(premiumTopping.getName().toLowerCase().contains("cheese")) {
                             cheesePrice = premiumTopping.getPrice(selectedSize);
                             if(extraCheese) {
-                                extraCheesePrice = 0.90;
+                                extraCheesePrice += 0.90;
                             }
                         }
                         //meat
                         else {
                             meatPrice = premiumTopping.getPrice(selectedSize);
-                            if(extraCheese) {
-                                extraMeatPrice = 1.50;
+                            if(extraMeat) {
+                                extraMeatPrice += 1.50;
                             }
                         }
                     }
@@ -161,7 +161,18 @@ public class Sandwich implements Product{
         if(selectedToppings != null && !selectedToppings.isEmpty()) {
             sb.append("\n\tToppings:\n");
             for(Topping topping: selectedToppings) {
-                sb.append("\t\t").append(topping.getName()).append("\n"); //maybe consider HashMap for key value count?
+                String toppingName = topping.getName();
+                boolean isCheese = toppingName.toLowerCase().contains("cheese");
+                boolean isMeat = !isCheese && (topping instanceof PremiumTopping);
+
+                if(isCheese && extraCheese) {
+                    toppingName += " (extra)";
+                }
+                else if (isMeat && extraMeat) {
+                    toppingName += " (extra)";
+                }
+
+                sb.append("\t\t").append(toppingName).append("\n"); //maybe consider HashMap for key value count?
             }
         }
         else {

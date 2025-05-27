@@ -11,7 +11,7 @@ public class PremiumTopping extends Topping{
     //getters & setters
     public double getPrice(int breadSize) {
         //cheese prices
-        if(super.getName().contains("cheese")) {
+        if(super.getName().toLowerCase().contains("cheese")) {
             if(breadSize == 4) {
                 this.price = 0.75;
             }
