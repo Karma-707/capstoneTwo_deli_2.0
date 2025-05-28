@@ -36,6 +36,39 @@ public class Order {
         products.add(product);
     }
 
+    //generate receipt of products order
+    public String generateReceipt() {
+        StringBuilder receipt = new StringBuilder();
+        double total = 0;
+        receipt.append("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+        receipt.append("\n🧾 Here’s your order summary:");
+        receipt.append("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n");
+
+        for(Product product: products) {
+            double price = product.calcPrice();
+
+            //product details
+            receipt.append(product);
+
+            //price of product
+//            receipt.append(String.format(" $%.2f\n", price));
+
+            // Append price line
+            receipt.append(String.format("\nSubtotal: $%.2f\n", price));
+            receipt.append("-".repeat(35)).append("\n");
+
+            total += price; //add to total of order
+        }
+
+        receipt.append("=".repeat(35)).append("\n");
+        receipt.append(String.format("Total: $%.2f\n", total));
+        receipt.append("=".repeat(35)).append("\n");
+
+        return receipt.toString();
+    }
+
+
+
     //getters & setters
     public List<Product> getProducts() {
         return products;
@@ -61,36 +94,4 @@ public class Order {
         this.chipList = chipList;
     }
 
-
-
-    //TODO: generate receipt of products order
-    public String generateReceipt() {
-        StringBuilder receipt = new StringBuilder();
-        double total = 0;
-        receipt.append("\n🧾 Here’s your order summary:\n");
-        for(Product product: products) {
-            double price = product.calcPrice();
-
-            //product details
-            receipt.append(product);
-
-            //price of product
-//            receipt.append(String.format(" $%.2f\n", price));
-
-            // Append price line
-            receipt.append(String.format("\nSubtotal: $%.2f\n", price));
-            receipt.append("-".repeat(35)).append("\n");
-
-            total += price; //add to total of order
-        }
-
-        receipt.append("=".repeat(35)).append("\n");
-        receipt.append(String.format("Total: $%.2f\n", total));
-        receipt.append("=".repeat(35)).append("\n");
-
-        return receipt.toString();
-    }
-
-    //TODO: calculate all product prices
-    public void calcPrice() {}
 }

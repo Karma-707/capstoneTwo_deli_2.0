@@ -39,7 +39,24 @@ public class Drink implements Product{
 
     }
 
-    //FIXME: do i need this?
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public String getDrinkSize() {
+        return drinkSize;
+    }
+
+    public void setDrinkSize(String drinkSize) {
+        this.drinkSize = drinkSize;
+    }
+
+
+
     @Override
     public double calcPrice() {
         return this.price;

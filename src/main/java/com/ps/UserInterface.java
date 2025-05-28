@@ -2,6 +2,11 @@ package com.ps;
 
 import com.ps.core.*;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -24,7 +29,7 @@ public class UserInterface {
             printHomeScreenMenu();
             System.out.print("👉 Enter your command: ");
 
-            homeScreenCommand = scanner.nextInt();
+            homeScreenCommand = checkValidatedMenuSelection(1);
 
             switch (homeScreenCommand) {
                 case 1: //new order
@@ -49,7 +54,7 @@ public class UserInterface {
         do {
             orderMenu();
             System.out.print("👉 Enter your command: ");
-            orderMenuCommand = scanner.nextInt();
+            orderMenuCommand = checkValidatedMenuSelection(4);
 
             switch (orderMenuCommand) {
                 case 1: //add sandwich
@@ -64,7 +69,8 @@ public class UserInterface {
                 case 4: //checkout
                     checkoutProcess();
                     break;
-                case 0:
+                case 0: //cancel order
+                    order = new Order();
                     System.out.println("Going back to home screen");
                     break;
                 default:
@@ -84,22 +90,34 @@ public class UserInterface {
         }
 
 //        System.out.println("\n🧾 Here’s your order summary:");
+        System.out.println(); //just for easier to read
         System.out.println(order.generateReceipt());
 
         System.out.println("Confirm and place your order?");
         System.out.println("Press [1] ➤ Yes, confirm order");
-        System.out.println("Press [2] ➤ No, still want to shop.");
+        System.out.println("Press [2] ➤ No, still want to shop");
+        System.out.println("Press [3] ➤ No, delete order");
         System.out.print("👉 Your choice: ");
-        int orderCommand = scanner.nextInt();
+        int orderCommand = checkValidatedMenuSelection(3);
 
-        if(orderCommand == 1) {
-            FileManager.writeReceipt(order);
-            System.out.println("🧾 Your receipt has been saved. Thank you for your order!");
-        }
-        else {
-            //requirement says to delete order?
-            System.out.println("Checkout cancelled. Go back and edit your order");
-        }
+        do {
+            switch (orderCommand) {
+                case 1: //confirm order
+                    FileManager.writeReceipt(order);
+                    System.out.println("🧾 Your receipt has been saved. Thank you for your order!");
+                    break;
+                case 2: //continue to shop
+                    System.out.println("Checkout cancelled. Go back and edit your order");
+                    break;
+                case 3: //delete order
+                    System.out.println("Checkout cancelled. Deleting order");
+                    order = new Order();
+                    break;
+                default: //wrong input
+                    System.out.print("❌ Invalid selection, try again: ");
+                    orderCommand = checkIntInput();
+            }
+        } while(orderCommand != 1 && orderCommand != 2 && orderCommand != 3);
 
     }
 
@@ -109,14 +127,14 @@ public class UserInterface {
         List<Chip> chosenChips = new ArrayList<>();
         int chipSelected;
         do {
-            System.out.println("\nWant a drink?");
+            System.out.println("\nWant A Snack?");
             for (int i = 0; i < allChips.size(); i++) {
                 System.out.printf("Press [%d] ➤ %-15s\n", i + 1, allChips.get(i).getName());
             }
             System.out.println("Press [0] ➤ Done");
 
-            System.out.print("👉 Select your beverage: ");
-            chipSelected = scanner.nextInt();
+            System.out.print("👉 Select your chip: ");
+            chipSelected = checkValidatedMenuSelection(allChips.size());
             if(chipSelected >= 1 && chipSelected <= allChips.size()) {
                 chosenChips.add(allChips.get(chipSelected - 1));
                 System.out.println(allChips.get(chipSelected - 1).getName() + " added.");
@@ -149,7 +167,7 @@ public class UserInterface {
             System.out.println("Press [0] ➤ Done");
 
             System.out.print("👉 Select your beverage: ");
-            drinkSelected = scanner.nextInt();
+            drinkSelected = checkValidatedMenuSelection(allDrinks.size());
             if(drinkSelected >= 1 && drinkSelected <= allDrinks.size()) {
                 Drink chosenDrink = allDrinks.get(drinkSelected - 1);
                 chosenDrinks.add(chosenDrink);
@@ -159,7 +177,7 @@ public class UserInterface {
                 System.out.println("Press [2] ➤ Medium");
                 System.out.println("Press [3] ➤ Large");
                 System.out.print("👉 Your choice: ");
-                int drinkSizeSelected = scanner.nextInt();
+                int drinkSizeSelected = checkValidatedMenuSelection(3);
                 String chosenDrinkSize;
                 if(drinkSizeSelected == 1) {
                     chosenDrinkSize = "Small";
@@ -201,8 +219,8 @@ public class UserInterface {
             System.out.printf("Press [%d] ➤ %-7s\n", i+1, allBreads.get(i));
         }
         System.out.print("👉 Select your bread: ");
-        int breadSelected = scanner.nextInt(); //grab user choice of bread
-        String chosenBread = allBreads.get(breadSelected-1); //name of bread they selected
+        int breadSelected = checkValidatedMenuSelection(allBreads.size()); //grab user choice of bread
+        String chosenBread = allBreads.get(breadSelected - 1); //name of bread they selected
         sandwich.setSelectedBread(chosenBread); //put bread in sandwich
 
         //select size
@@ -213,9 +231,10 @@ public class UserInterface {
             System.out.printf("Press [%d] ➤ %-2s inches\n", i+1, allSize.get(i));
         }
         System.out.print("👉 Select your size: ");
-        int sizeSelected = scanner.nextInt(); //grab user choice of bread
+        int sizeSelected = checkValidatedMenuSelection(allSize.size()); //grab user choice of bread size
         int chosenSize = allSize.get(sizeSelected-1); //size of bread they selected
         sandwich.setSelectedSize(chosenSize); //put size in sandwich
+
 
         //select toppings
         int toppingSelected;
@@ -234,11 +253,12 @@ public class UserInterface {
             }
             System.out.println("Press [0] ➤ Done");
             System.out.print("👉 Select your topping: ");
+            toppingSelected = checkValidatedMenuSelection(allRegularToppings.size()); //grab user choice of topping
 
-            toppingSelected = scanner.nextInt(); //grab user choice of topping
             if(toppingSelected == 0) {
                 break;
             }
+
             Topping chosenTopping = allRegularToppings.get(toppingSelected - 1); //topping selected
             String chosenToppingName = chosenTopping.getName(); //name of topping they selected
 
@@ -260,6 +280,7 @@ public class UserInterface {
                 System.out.println("❌ You can only add up to 2 of the same topping. No more extras!");
             }
 
+
         } while(toppingSelected != 0);
 
         //add meat
@@ -271,7 +292,7 @@ public class UserInterface {
         }
         System.out.println("Press [0] ➤ Done");
         System.out.print("👉 Select your topping: ");
-        toppingSelected = scanner.nextInt(); //grab user choice of topping
+        toppingSelected = checkValidatedMenuSelection(allMeatToppings.size()); //grab user choice of topping
 
         if(toppingSelected != 0) {
             Topping chosenTopping = allMeatToppings.get(toppingSelected - 1); //topping selected
@@ -281,7 +302,7 @@ public class UserInterface {
             System.out.println("Press [1] ➤ Yes, love extras!");
             System.out.println("Press [0] ➤ No, no more");
             System.out.print("👉 Your choice: ");
-            int extraMeat = scanner.nextInt();
+            int extraMeat = checkValidatedMenuSelection(1);
 
             if(extraMeat == 1) {
                 sandwich.setExtraMeat(true);
@@ -300,7 +321,7 @@ public class UserInterface {
         System.out.println("Press [0] ➤ Done");
         System.out.print("👉 Select your topping: ");
 
-        toppingSelected = scanner.nextInt(); //grab user choice of topping
+        toppingSelected = checkValidatedMenuSelection(allCheeseToppings.size()); //grab user choice of topping
         if(toppingSelected != 0) {
             Topping chosenTopping = allCheeseToppings.get(toppingSelected - 1); //topping selected
             chosenToppings.add(chosenTopping);
@@ -309,7 +330,7 @@ public class UserInterface {
             System.out.println("Press [1] ➤ Yes, love extras!");
             System.out.println("Press [0] ➤ No, no more");
             System.out.print("👉 Your choice: ");
-            int extraCheese = scanner.nextInt();
+            int extraCheese = checkValidatedMenuSelection(1);
 
             if(extraCheese == 1) {
                 sandwich.setExtraCheese(true);
@@ -329,7 +350,7 @@ public class UserInterface {
         System.out.println("Press [0] ➤ Done");
 
         System.out.print("👉 Select your sauce: ");
-        int sauceSelected = scanner.nextInt(); //grab user choice of sauce
+        int sauceSelected = checkValidatedMenuSelection(allSauces.size()); //grab user choice of sauce
         if(sauceSelected != 0) {
             chosenSauces.add(allSauces.get(sauceSelected-1)); //name of sauce selected added to list
             sandwich.setSelectedSauces(chosenSauces); //put sauce in sandwich
@@ -342,9 +363,8 @@ public class UserInterface {
         System.out.println("Press [0] ➤ No, leave it untoasted");
         System.out.print("👉 Your choice: ");
 
-        int toastSelected = scanner.nextInt(); //grab user choice to toast
+        int toastSelected = checkValidatedMenuSelection(1); //grab user choice to toast
         boolean chosenToast = (toastSelected == 1); //toasted of bread
-        //TODO: validate choice for other
         sandwich.setToasted(chosenToast); //put size in sandwich
 
         //print out the sandwich so far
@@ -376,14 +396,76 @@ public class UserInterface {
         System.out.println("Press [0] ➤ Exit");
     }
 
-    //TODO: add each order to user shopping
-    private static void addProduct() {
 
+    /* Check Validation Inputs */
+
+    //validate int input - data type
+    private static int checkIntInput() {
+        while(true) {
+            String userInput = scanner.nextLine().trim();
+
+            //don't allow -0 as an option
+            if(userInput.equalsIgnoreCase("-0")) {
+                System.out.print("🚫 You can't enter 0 as a value... Try again: ");
+                continue; //go back to top of loop
+            }
+
+            try {
+                if(Integer.parseInt(userInput) < 0) {
+                    System.out.print("⚠️ You can't put a negative value... Try again!: ");
+                }
+                else {
+                    return Integer.parseInt(userInput);
+                }
+            } catch (NumberFormatException e) {
+                System.out.print("⚠️ Not a valid number! Please try again: ");
+                writeErrorsToLogsFile(e);
+            }
+
+        }
     }
 
-    //TODO: checkout user items in order
-    private static void checkOut() {
 
+    private static int checkValidatedMenuSelection(int maxOption) {
+        int selection;
+
+        do {
+           selection = checkIntInput();
+           if(selection < 0 || selection > maxOption) {
+               System.out.print("❌ Invalid selection, try again: ");
+           }
+        } while(selection < 0 || selection > maxOption);
+
+        return selection;
+    }
+
+
+    /* Logs Methods */
+
+    //write to log file of error/crashes
+    public static void writeErrorsToLogsFile(Exception e) {
+        try {
+            LocalDateTime timeStamp = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            String formatedTimeStamp = timeStamp.format(formatter);
+
+            //write to logs the error
+            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("exceptions.log",true));
+            bufferedWriter.write("Time of occurrence: " + formatedTimeStamp + "\t" + e.getMessage() + "\n");
+            bufferedWriter.close();
+        } catch (IOException ex) {
+            writeErrorsToLogsFile(e);
+        }
+    }
+
+    //make the logs empty
+    private static void clearLogsFile() {
+        try {
+            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("exceptions.log", false));
+            bufferedWriter.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

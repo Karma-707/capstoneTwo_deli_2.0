@@ -12,7 +12,6 @@ public class Sandwich implements Product{
     private List<String> selectedSauces;
     private boolean extraMeat = false;
     private boolean extraCheese = false;
-    private Map<String, Integer> toppingsCountMap = new HashMap<>();
 
     private List<Integer> offeredSizes = Arrays.asList(4, 8, 12);
     private List<String> offeredBread = Arrays.asList("White", "Wheat", "Rye", "Wrap");
@@ -58,143 +57,8 @@ public class Sandwich implements Product{
 
 
 
-    //TODO: maybe add on, see as it goes
-    private void viewAllToppings() {}
 
-    private void viewAllSauces() {}
 
-    //FIXME: i wonder if i should set name of everything to get price
-    @Override
-    public double calcPrice() {
-        double totalPrice = 0;
-        double breadPrice = 0;
-        double cheesePrice = 0;
-        double extraCheesePrice = 0;
-        double meatPrice = 0;
-        double extraMeatPrice = 0;
-
-        switch (selectedSize) {
-            case 4:
-                breadPrice = 5.50;
-                for(Topping topping: selectedToppings) {
-                    if(topping instanceof PremiumTopping premiumTopping) {
-                        //cheese
-                        if(premiumTopping.getName().toLowerCase().contains("cheese")) {
-                            cheesePrice = premiumTopping.getPrice(selectedSize);
-                            if(extraCheese) {
-                                extraCheesePrice += 0.30;
-                            }
-                        }
-                        //meat
-                        else {
-                            meatPrice = premiumTopping.getPrice(selectedSize);
-                            if(extraMeat) {
-                                extraMeatPrice += 0.50;
-                            }
-                        }
-                    }
-                }
-
-                break;
-            case 8:
-                breadPrice = 7.00;
-                for(Topping topping: selectedToppings) {
-                    if(topping instanceof PremiumTopping premiumTopping) {
-                        //cheese
-                        if(premiumTopping.getName().toLowerCase().contains("cheese")) {
-                            cheesePrice = premiumTopping.getPrice(selectedSize);
-                            if(extraCheese) {
-                                extraCheesePrice += 0.60;
-                            }
-                        }
-                        //meat
-                        else {
-                            meatPrice = premiumTopping.getPrice(selectedSize);
-                            if(extraMeat) {
-                                extraMeatPrice += 1.00;
-                            }
-                        }
-                    }
-                }
-
-                break;
-            case 12:
-                breadPrice = 8.50;
-                for(Topping topping: selectedToppings) {
-                    if(topping instanceof PremiumTopping premiumTopping) {
-                        //cheese
-                        if(premiumTopping.getName().toLowerCase().contains("cheese")) {
-                            cheesePrice = premiumTopping.getPrice(selectedSize);
-                            if(extraCheese) {
-                                extraCheesePrice += 0.90;
-                            }
-                        }
-                        //meat
-                        else {
-                            meatPrice = premiumTopping.getPrice(selectedSize);
-                            if(extraMeat) {
-                                extraMeatPrice += 1.50;
-                            }
-                        }
-                    }
-                }
-
-                break;
-            default:
-                break;
-        }
-
-        //calculate total of sandwich
-        totalPrice = breadPrice + cheesePrice + extraCheesePrice + meatPrice + extraMeatPrice;
-
-        return totalPrice;
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-
-        sb.append("\n🥪 Sandwich Details:");
-        sb.append("\n\tBread: ").append(selectedBread);
-        sb.append("\n\tSize: ").append(selectedSize).append(" inches");
-
-        if(selectedToppings != null && !selectedToppings.isEmpty()) {
-            sb.append("\n\tToppings:\n");
-            for(Topping topping: selectedToppings) {
-                String toppingName = topping.getName();
-                boolean isCheese = toppingName.toLowerCase().contains("cheese");
-                boolean isMeat = !isCheese && (topping instanceof PremiumTopping);
-
-                if(isCheese && extraCheese) {
-                    toppingName += " (extra)";
-                }
-                else if (isMeat && extraMeat) {
-                    toppingName += " (extra)";
-                }
-
-                sb.append("\t\t").append(toppingName).append("\n"); //maybe consider HashMap for key value count?
-            }
-        }
-        else {
-            sb.append("\n\tToppings:");
-            sb.append(" None\n");
-        }
-
-        if(selectedSauces != null && !selectedSauces.isEmpty()) {
-            sb.append("\tSauces:\n");
-            for(String sauce: selectedSauces) {
-                sb.append("\t\t").append(sauce).append("\n");
-            }
-        }
-        else {
-            sb.append("\tSauces:");
-            sb.append(" None\n");
-        }
-
-        sb.append("\tToasted: ").append(isToasted ? "Yes" : "No");
-
-        return sb.toString();
-    }
 
     //getters & setters
     public List<Integer> getOfferedSizes() {
@@ -299,5 +163,137 @@ public class Sandwich implements Product{
 
     public void setExtraCheese(boolean extraCheese) {
         this.extraCheese = extraCheese;
+    }
+
+    @Override
+    public double calcPrice() {
+        double totalPrice = 0;
+        double breadPrice = 0;
+        double cheesePrice = 0;
+        double extraCheesePrice = 0;
+        double meatPrice = 0;
+        double extraMeatPrice = 0;
+
+        switch (selectedSize) {
+            case 4:
+                breadPrice = 5.50;
+                for(Topping topping: selectedToppings) {
+                    if(topping instanceof PremiumTopping premiumTopping) {
+                        //cheese
+                        if(premiumTopping.getName().toLowerCase().contains("cheese")) {
+                            cheesePrice = premiumTopping.getPrice(selectedSize);
+                            if(extraCheese) {
+                                extraCheesePrice += 0.30;
+                            }
+                        }
+                        //meat
+                        else {
+                            meatPrice = premiumTopping.getPrice(selectedSize);
+                            if(extraMeat) {
+                                extraMeatPrice += 0.50;
+                            }
+                        }
+                    }
+                }
+
+                break;
+            case 8:
+                breadPrice = 7.00;
+                for(Topping topping: selectedToppings) {
+                    if(topping instanceof PremiumTopping premiumTopping) {
+                        //cheese
+                        if(premiumTopping.getName().toLowerCase().contains("cheese")) {
+                            cheesePrice = premiumTopping.getPrice(selectedSize);
+                            if(extraCheese) {
+                                extraCheesePrice += 0.60;
+                            }
+                        }
+                        //meat
+                        else {
+                            meatPrice = premiumTopping.getPrice(selectedSize);
+                            if(extraMeat) {
+                                extraMeatPrice += 1.00;
+                            }
+                        }
+                    }
+                }
+
+                break;
+            case 12:
+                breadPrice = 8.50;
+                for(Topping topping: selectedToppings) {
+                    if(topping instanceof PremiumTopping premiumTopping) {
+                        //cheese
+                        if(premiumTopping.getName().toLowerCase().contains("cheese")) {
+                            cheesePrice = premiumTopping.getPrice(selectedSize);
+                            if(extraCheese) {
+                                extraCheesePrice += 0.90;
+                            }
+                        }
+                        //meat
+                        else {
+                            meatPrice = premiumTopping.getPrice(selectedSize);
+                            if(extraMeat) {
+                                extraMeatPrice += 1.50;
+                            }
+                        }
+                    }
+                }
+
+                break;
+            default:
+                break;
+        }
+
+        //calculate total of sandwich
+        totalPrice = breadPrice + cheesePrice + extraCheesePrice + meatPrice + extraMeatPrice;
+
+        return totalPrice;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("🥪 Sandwich Details:");
+        sb.append("\n\tBread: ").append(selectedBread);
+        sb.append("\n\tSize: ").append(selectedSize).append(" inches");
+
+        if(selectedToppings != null && !selectedToppings.isEmpty()) {
+            sb.append("\n\tToppings:\n");
+            for(Topping topping: selectedToppings) {
+                String toppingName = topping.getName();
+                boolean isCheese = toppingName.toLowerCase().contains("cheese");
+                boolean isMeat = !isCheese && (topping instanceof PremiumTopping);
+
+                if(isCheese && extraCheese) {
+                    toppingName += " (extra)";
+                }
+                else if (isMeat && extraMeat) {
+                    toppingName += " (extra)";
+                }
+
+                sb.append("\t\t").append(toppingName).append("\n"); //maybe consider HashMap for key value count?
+            }
+        }
+        else {
+            sb.append("\n\tToppings:");
+            sb.append(" None\n");
+        }
+
+        if(selectedSauces != null && !selectedSauces.isEmpty()) {
+            sb.append("\tSauces:\n");
+            for(String sauce: selectedSauces) {
+                sb.append("\t\t").append(sauce).append("\n");
+            }
+        }
+        else {
+            sb.append("\tSauces:");
+            sb.append(" None\n");
+        }
+
+        sb.append("\tToasted: ").append(isToasted ? "Yes" : "No");
+
+        return sb.toString();
     }
 }

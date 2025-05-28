@@ -24,7 +24,6 @@ public class Chip implements Product{
     }
 
 
-    //FIXME: do i need this?
     @Override
     public double calcPrice() {
         return this.price;
