@@ -1,0 +1,20 @@
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🧾 Here’s your order summary:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Signature Sandwich: BLT
+🥪 Sandwich Details:
+	Bread: White
+	Size: 8 inches
+	Toppings:
+		Bacon
+		Cheddar Cheese
+		Lettuce
+		Tomato
+	Sauces:
+		Ranch
+	Toasted: Yes
+Subtotal: $10.50
+-----------------------------------
+===================================
+Total: $10.50
+===================================

@@ -21,7 +21,7 @@ public class Sandwich implements Product{
     );
     private List<Topping> offeredRegularToppings = Arrays.asList(
             new RegularTopping("Lettuce"),
-            new RegularTopping("Bell Peppers"),
+            new RegularTopping("Peppers"),
             new RegularTopping("Onion"),
             new RegularTopping("Tomato"),
             new RegularTopping("Jalapeños"),
@@ -54,7 +54,6 @@ public class Sandwich implements Product{
     //constructor
     public Sandwich() {
     }
-
 
 
 

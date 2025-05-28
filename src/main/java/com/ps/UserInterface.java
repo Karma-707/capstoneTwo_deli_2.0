@@ -21,7 +21,7 @@ public class UserInterface {
         display();
     }
 
-    //TODO: deli main functions
+    //deli main functions
     private static void display() {
         int homeScreenCommand;
 
@@ -105,6 +105,7 @@ public class UserInterface {
                 case 1: //confirm order
                     FileManager.writeReceipt(order);
                     System.out.println("🧾 Your receipt has been saved. Thank you for your order!");
+                    order = new Order();
                     break;
                 case 2: //continue to shop
                     System.out.println("Checkout cancelled. Go back and edit your order");
@@ -208,15 +209,71 @@ public class UserInterface {
 
     //add sandwich to order
     private static void addSandwichProcess() {
-        Sandwich sandwich = new Sandwich();
-        System.out.println("\nReady to start building your sandwich? Let's go!");
+            System.out.println("\n🥪 Let's make your perfect sandwich!");
+            System.out.println("Press [1] ➤ Build your own sandwich");
+            System.out.println("Press [2] ➤ Choose a signature sandwich (quick & tasty)");
+            System.out.println("Press [0] ➤ Go back");
+            System.out.print("👉 Your choice: ");
+            int sandwichCommand = checkValidatedMenuSelection(2);
 
+            switch (sandwichCommand) {
+                case 1: //build your own sandwich
+                    buildCustomSandwich();
+                    break;
+                case 2: //choose signature sandwich
+                    addSignatureSandwich();
+                    break;
+                case 0: //go back to main menu
+                    System.out.println("Going back!");
+                    return;
+                default:
+            }
+    }
+
+    //add signature sandwich
+    private static void addSignatureSandwich() {
+        System.out.println("\n🚀 Choose a Signature Sandwich:");
+        System.out.println("Press [1] ➤ BLT");
+        System.out.println("Press [2] ➤ Philly Cheese Steak");
+        System.out.println("Press [0] ➤ Go back");
+        System.out.print("👉 Your choice: ");
+        int sigCommand = checkValidatedMenuSelection(2);
+
+        Sandwich sandwich = null;
+
+        switch (sigCommand) {
+            case 1: //BLT
+                sandwich = new BLT();
+                break;
+            case 2: //Philly cheese steak
+                sandwich = new PhillyCheeseSteak();
+                break;
+            case 0: //go back to sandwich options
+                System.out.println("Returning to sandwich options...");
+                return;
+            default:
+        }
+
+        //print out the sandwich so far
+        System.out.println(sandwich);
+        System.out.printf("Total: $%.2f\n", sandwich.calcPrice());
+        System.out.println("Sandwich successfully added");
+
+        //final sandwich add to products
+        order.addProduct(sandwich);
+    }
+
+    //build custom sandwich
+    private static void buildCustomSandwich() {
+        Sandwich sandwich = new Sandwich();
+
+        System.out.println("\nReady to start building your sandwich? Let's go!");
         //select bread type
         System.out.println("\nAvailable Bread Types");
         List<String> allBreads = sandwich.getOfferedBread();
         //print all bread types
-        for(int i = 0; i < allBreads.size(); i++) {
-            System.out.printf("Press [%d] ➤ %-7s\n", i+1, allBreads.get(i));
+        for (int i = 0; i < allBreads.size(); i++) {
+            System.out.printf("Press [%d] ➤ %-7s\n", i + 1, allBreads.get(i));
         }
         System.out.print("👉 Select your bread: ");
         int breadSelected = checkValidatedMenuSelection(allBreads.size()); //grab user choice of bread
@@ -227,12 +284,12 @@ public class UserInterface {
         System.out.println("\nChoose sandwich size:");
         List<Integer> allSize = sandwich.getOfferedSizes();
         //print all bread size
-        for(int i = 0; i < allSize.size(); i++) {
-            System.out.printf("Press [%d] ➤ %-2s inches\n", i+1, allSize.get(i));
+        for (int i = 0; i < allSize.size(); i++) {
+            System.out.printf("Press [%d] ➤ %-2s inches\n", i + 1, allSize.get(i));
         }
         System.out.print("👉 Select your size: ");
         int sizeSelected = checkValidatedMenuSelection(allSize.size()); //grab user choice of bread size
-        int chosenSize = allSize.get(sizeSelected-1); //size of bread they selected
+        int chosenSize = allSize.get(sizeSelected - 1); //size of bread they selected
         sandwich.setSelectedSize(chosenSize); //put size in sandwich
 
 
@@ -255,7 +312,7 @@ public class UserInterface {
             System.out.print("👉 Select your topping: ");
             toppingSelected = checkValidatedMenuSelection(allRegularToppings.size()); //grab user choice of topping
 
-            if(toppingSelected == 0) {
+            if (toppingSelected == 0) {
                 break;
             }
 
@@ -281,7 +338,7 @@ public class UserInterface {
             }
 
 
-        } while(toppingSelected != 0);
+        } while (toppingSelected != 0);
 
         //add meat
         System.out.println("\nSpecial Meat Toppings!");
@@ -294,7 +351,7 @@ public class UserInterface {
         System.out.print("👉 Select your topping: ");
         toppingSelected = checkValidatedMenuSelection(allMeatToppings.size()); //grab user choice of topping
 
-        if(toppingSelected != 0) {
+        if (toppingSelected != 0) {
             Topping chosenTopping = allMeatToppings.get(toppingSelected - 1); //topping selected
             chosenToppings.add(chosenTopping);
 
@@ -304,7 +361,7 @@ public class UserInterface {
             System.out.print("👉 Your choice: ");
             int extraMeat = checkValidatedMenuSelection(1);
 
-            if(extraMeat == 1) {
+            if (extraMeat == 1) {
                 sandwich.setExtraMeat(true);
             }
         }
@@ -314,7 +371,7 @@ public class UserInterface {
 
         //print all premium cheese toppings
         for (int i = 0; i < allCheeseToppings.size(); i++) {
-            if(allCheeseToppings.get(i).getName().contains("Cheese")) {
+            if (allCheeseToppings.get(i).getName().contains("Cheese")) {
                 System.out.printf("Press [%d] ➤ %-7s\n", i + 1, allCheeseToppings.get(i));
             }
         }
@@ -322,7 +379,7 @@ public class UserInterface {
         System.out.print("👉 Select your topping: ");
 
         toppingSelected = checkValidatedMenuSelection(allCheeseToppings.size()); //grab user choice of topping
-        if(toppingSelected != 0) {
+        if (toppingSelected != 0) {
             Topping chosenTopping = allCheeseToppings.get(toppingSelected - 1); //topping selected
             chosenToppings.add(chosenTopping);
 
@@ -332,7 +389,7 @@ public class UserInterface {
             System.out.print("👉 Your choice: ");
             int extraCheese = checkValidatedMenuSelection(1);
 
-            if(extraCheese == 1) {
+            if (extraCheese == 1) {
                 sandwich.setExtraCheese(true);
             }
         }
@@ -344,15 +401,15 @@ public class UserInterface {
         List<String> chosenSauces = new ArrayList<>();
         System.out.println("\nAdd sauces");
         List<String> allSauces = sandwich.getOfferedSauces(); //get all sauces
-        for(int i = 0; i < allSauces.size(); i++) {
-            System.out.printf("Press [%d] ➤ %-10s\n", i+1, allSauces.get(i));
+        for (int i = 0; i < allSauces.size(); i++) {
+            System.out.printf("Press [%d] ➤ %-10s\n", i + 1, allSauces.get(i));
         }
         System.out.println("Press [0] ➤ Done");
 
         System.out.print("👉 Select your sauce: ");
         int sauceSelected = checkValidatedMenuSelection(allSauces.size()); //grab user choice of sauce
-        if(sauceSelected != 0) {
-            chosenSauces.add(allSauces.get(sauceSelected-1)); //name of sauce selected added to list
+        if (sauceSelected != 0) {
+            chosenSauces.add(allSauces.get(sauceSelected - 1)); //name of sauce selected added to list
             sandwich.setSelectedSauces(chosenSauces); //put sauce in sandwich
         }
 
@@ -371,7 +428,6 @@ public class UserInterface {
         System.out.println(sandwich);
         System.out.printf("Total: $%.2f\n", sandwich.calcPrice());
         System.out.println("Sandwich successfully added");
-        //make the list editable if they want to change anything?
 
         //final sandwich add to products
         order.addProduct(sandwich);
@@ -385,7 +441,7 @@ public class UserInterface {
         System.out.println("Press [2] ➤ Add Drink");
         System.out.println("Press [3] ➤ Add Chips");
         System.out.println("Press [4] ➤ Checkout");
-        System.out.println("Press [0] ➤ Cancel Order");
+        System.out.println("Press [0] ➤ Start Over");
     }
 
     //print home screen menu options

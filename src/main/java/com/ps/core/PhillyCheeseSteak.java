@@ -3,31 +3,31 @@ package com.ps.core;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BLT extends Sandwich{
+public class PhillyCheeseSteak extends Sandwich{
 
-    public BLT() {
+    public PhillyCheeseSteak() {
         super();
 
-        //set BLT sandwich
+        //set PhillyCheeseSteak sandwich
         setSelectedBread("White");
         setSelectedSize(8);
 
         List<Topping> toppings = new ArrayList<>();
-        toppings.add(new PremiumTopping("Bacon"));
-        toppings.add(new PremiumTopping("Cheddar Cheese"));
-        toppings.add(new RegularTopping("Lettuce"));
-        toppings.add(new RegularTopping("Tomato"));
+        toppings.add(new PremiumTopping("Steak"));
+        toppings.add(new PremiumTopping("American Cheese"));
+        toppings.add(new RegularTopping("Peppers"));
         setSelectedToppings(toppings);
 
         List<String> sauces = new ArrayList<>();
-        sauces.add("Ranch");
+        sauces.add("Mayonnaise");
         setSelectedSauces(sauces);
 
         setToasted(true);
+
     }
 
     @Override
     public String toString() {
-        return "Signature Sandwich: BLT\n" + super.toString();
+        return "Signature Sandwich: Philly Cheese Steak\n" + super.toString();
     }
 }
