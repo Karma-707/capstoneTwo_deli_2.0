@@ -139,6 +139,7 @@ public class UserInterface {
     private static void addDrinkProcess() {
         List<Drink> allDrinks = order.getDrinkList();
         List<Drink> chosenDrinks = new ArrayList<>();
+
         int drinkSelected;
         do {
             System.out.println("\nWant a drink?");
@@ -150,8 +151,28 @@ public class UserInterface {
             System.out.print("👉 Select your beverage: ");
             drinkSelected = scanner.nextInt();
             if(drinkSelected >= 1 && drinkSelected <= allDrinks.size()) {
-                chosenDrinks.add(allDrinks.get(drinkSelected - 1));
-                System.out.println(allDrinks.get(drinkSelected - 1).getName() + " added.");
+                Drink chosenDrink = allDrinks.get(drinkSelected - 1);
+                chosenDrinks.add(chosenDrink);
+
+                System.out.println("What size would you like?");
+                System.out.println("Press [1] ➤ Small");
+                System.out.println("Press [2] ➤ Medium");
+                System.out.println("Press [3] ➤ Large");
+                System.out.print("👉 Your choice: ");
+                int drinkSizeSelected = scanner.nextInt();
+                String chosenDrinkSize;
+                if(drinkSizeSelected == 1) {
+                    chosenDrinkSize = "Small";
+                }
+                else if(drinkSizeSelected == 2) {
+                    chosenDrinkSize = "Medium";
+                }
+                else {
+                    chosenDrinkSize = "Large";
+                }
+                chosenDrink.updatePrice(chosenDrinkSize); //set up price with size of drink
+                System.out.println(chosenDrink.getName() + " added.");
+
             }
             else if (drinkSelected == 0) {
                 break;

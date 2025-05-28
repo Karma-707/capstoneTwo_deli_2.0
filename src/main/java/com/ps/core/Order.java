@@ -7,14 +7,14 @@ import java.util.List;
 public class Order {
     private List<Product> products = new ArrayList<>();
     private List<Drink> drinkList = Arrays.asList(
-            new Drink("Coca-Cola", 1.50),
-            new Drink("Diet Coke", 1.50),
-            new Drink("Sprite", 1.50),
-            new Drink("Dr Pepper", 1.50),
-            new Drink("Root Beer", 1.50),
-            new Drink("Bottled Water", 1.00),
-            new Drink("Lemonade", 1.75),
-            new Drink("Iced Tea", 1.75)
+            new Drink("Coca-Cola"),
+            new Drink("Diet Coke"),
+            new Drink("Sprite"),
+            new Drink("Dr Pepper"),
+            new Drink("Root Beer"),
+            new Drink("Bottled Water"),
+            new Drink("Lemonade"),
+            new Drink("Iced Tea")
     );
     private List<Chip> chipList = Arrays.asList(
             new Chip("Lays Classic"),
@@ -69,13 +69,25 @@ public class Order {
         double total = 0;
         receipt.append("\n🧾 Here’s your order summary:\n");
         for(Product product: products) {
-            receipt.append(product);
             double price = product.calcPrice();
-            receipt.append(String.format(" $%.2f\n", price));
+
+            //product details
+            receipt.append(product);
+
+            //price of product
+//            receipt.append(String.format(" $%.2f\n", price));
+
+            // Append price line
+            receipt.append(String.format("\nSubtotal: $%.2f\n", price));
+            receipt.append("-".repeat(35)).append("\n");
+
             total += price; //add to total of order
         }
 
+        receipt.append("=".repeat(35)).append("\n");
         receipt.append(String.format("Total: $%.2f\n", total));
+        receipt.append("=".repeat(35)).append("\n");
+
         return receipt.toString();
     }
 

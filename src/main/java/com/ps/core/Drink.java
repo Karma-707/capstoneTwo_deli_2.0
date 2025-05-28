@@ -3,9 +3,10 @@ package com.ps.core;
 public class Drink implements Product{
     private String name;
     private double price;
+    private String drinkSize;
 
     //constructor
-    public Drink(String name, double price) {
+    public Drink(String name) {
         this.name = name;
     }
 
@@ -23,12 +24,15 @@ public class Drink implements Product{
         switch (drinkSize) {
             case "Small":
                 this.price = 2;
+                this.drinkSize = drinkSize;
                 break;
             case "Medium":
                 this.price = 2.5;
+                this.drinkSize = drinkSize;
                 break;
             case "Large":
                 this.price = 3;
+                this.drinkSize = drinkSize;
                 break;
             default:
         }
@@ -43,9 +47,6 @@ public class Drink implements Product{
 
     @Override
     public String toString() {
-        return "Drink{" +
-                "name='" + name + '\'' +
-                ", price=" + price +
-                '}';
+        return String.format("🥤%s (%s)", name, drinkSize);
     }
 }

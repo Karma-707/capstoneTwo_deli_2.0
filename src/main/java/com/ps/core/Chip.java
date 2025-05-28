@@ -32,9 +32,6 @@ public class Chip implements Product{
 
     @Override
     public String toString() {
-        return "Chip{" +
-                "name='" + name + '\'' +
-                ", price=" + price +
-                '}';
+        return String.format("🍟%s ", name);
     }
 }
