@@ -28,6 +28,6 @@ public class BLT extends Sandwich{
 
     @Override
     public String toString() {
-        return "Signature Sandwich: BLT\n" + super.toString();
+        return "📌 Signature Sandwich: BLT\n" + super.toString();
     }
 }

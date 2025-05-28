@@ -1,9 +1,7 @@
 package com.ps.core;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Sandwich implements Product{
     private String selectedBread;
@@ -38,16 +36,14 @@ public class Sandwich implements Product{
             new PremiumTopping("Chicken"),
             new PremiumTopping("Bacon")
     );
-
     private List<Topping> offeredCheeseToppings = Arrays.asList(
             new PremiumTopping("American Cheese"),
             new PremiumTopping("Provolone Cheese"),
             new PremiumTopping("Cheddar Cheese"),
             new PremiumTopping("Swiss Cheese")
     );
-
     private boolean isToasted;
-
+    private boolean hasAuJus = false;
 
 
 
@@ -164,6 +160,14 @@ public class Sandwich implements Product{
         this.extraCheese = extraCheese;
     }
 
+    public boolean isHasAuJus() {
+        return hasAuJus;
+    }
+
+    public void setHasAuJus(boolean hasAuJus) {
+        this.hasAuJus = hasAuJus;
+    }
+
     @Override
     public double calcPrice() {
         double totalPrice = 0;
@@ -255,11 +259,11 @@ public class Sandwich implements Product{
         StringBuilder sb = new StringBuilder();
 
         sb.append("🥪 Sandwich Details:");
-        sb.append("\n\tBread: ").append(selectedBread);
-        sb.append("\n\tSize: ").append(selectedSize).append(" inches");
+        sb.append("\n\t🫓 Bread: ").append(selectedBread);
+        sb.append("\n\t📏 Size: ").append(selectedSize).append(" inches");
 
         if(selectedToppings != null && !selectedToppings.isEmpty()) {
-            sb.append("\n\tToppings:\n");
+            sb.append("\n\t🥬 Toppings:\n");
             for(Topping topping: selectedToppings) {
                 String toppingName = topping.getName();
                 boolean isCheese = toppingName.toLowerCase().contains("cheese");
@@ -272,26 +276,33 @@ public class Sandwich implements Product{
                     toppingName += " (extra)";
                 }
 
-                sb.append("\t\t").append(toppingName).append("\n"); //maybe consider HashMap for key value count?
+                sb.append("\t\t• ").append(toppingName).append("\n"); //maybe consider HashMap for key value count?
             }
         }
         else {
-            sb.append("\n\tToppings:");
+            sb.append("\n\t🥬 Toppings:");
             sb.append(" None\n");
         }
 
         if(selectedSauces != null && !selectedSauces.isEmpty()) {
-            sb.append("\tSauces:\n");
+            sb.append("\t🧂 Sauces:\n");
             for(String sauce: selectedSauces) {
-                sb.append("\t\t").append(sauce).append("\n");
+                sb.append("\t\t• ").append(sauce).append("\n");
             }
         }
         else {
-            sb.append("\tSauces:");
+            sb.append("\t🧂 Sauces:");
             sb.append(" None\n");
         }
 
-        sb.append("\tToasted: ").append(isToasted ? "Yes" : "No");
+        if(hasAuJus) {
+            sb.append("\t🍽️ Sides: Au Jus Sauce\n");
+        }
+        else {
+            sb.append("\t🍽️ Sides: None\n");
+        }
+
+        sb.append("\t🔥 Toasted: ").append(isToasted ? "Yes ✅" : "No ❌");
 
         return sb.toString();
     }

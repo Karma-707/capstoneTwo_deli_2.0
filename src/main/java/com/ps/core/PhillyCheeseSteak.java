@@ -28,6 +28,6 @@ public class PhillyCheeseSteak extends Sandwich{
 
     @Override
     public String toString() {
-        return "Signature Sandwich: Philly Cheese Steak\n" + super.toString();
+        return "📌 Signature Sandwich: Philly Cheese Steak\n" + super.toString();
     }
 }
