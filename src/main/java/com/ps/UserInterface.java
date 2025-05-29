@@ -23,7 +23,6 @@ public class UserInterface {
     private static Order order;
     private static boolean isFirstTime = false;
 
-
     //start to create an order
     public static void init() {
         order = new Order();
@@ -34,21 +33,23 @@ public class UserInterface {
     private static void display() {
         int homeScreenCommand;
 
-        introMessage();
+//        introMessage();
 
         do {
             printHomeScreenMenu();
             System.out.print("👉 Your choice: ");
 
-            homeScreenCommand = checkValidatedMenuSelection(1);
+            homeScreenCommand = checkValidatedMenuSelection(2);
 
             switch (homeScreenCommand) {
                 case 1: //new order
                     orderScreen();
                     break;
+                case 2: //animation settings
+                    animationSettingScreen();
+                    break;
                 case 0: //exits from program
                     outroMessage();
-                    System.out.println("👋 Thanks for stopping by! Enjoy your meal!");
                     break;
                 default:
                     System.out.println("⚠️ Invalid input, please try again");
@@ -58,8 +59,42 @@ public class UserInterface {
 
     }
 
+    //toggle animation settings
+    private static void animationSettingScreen() {
+        System.out.println("\n━━━━━━━━━━━━━━━━━━━━━");
+        System.out.println("🎛️ Animation Settings");
+        System.out.println("━━━━━━━━━━━━━━━━━━━━━");
+        System.out.println("✨ Press [1] ➤ Enable animations");
+        System.out.println("⏩ Press [0] ➤ Skip all animations");
+        System.out.print("👉 Your choice: ");
+        animationsEnabled = checkValidatedMenuSelection(1) == 1;
+
+    }
+
     //outro message
     private static void outroMessage() {
+//        System.out.println("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+//        System.out.println("🎩 Case Closed, Detective.");
+//        System.out.println("Your skills in sandwich sleuthing have brought us closer to the truth...");
+//        System.out.println("Or at least filled our stomachs.");
+//        System.out.println("Remember: behind every great sandwich lies a mystery.");
+//        System.out.println("Until next time, stay sharp—and stay hungry. 🍞");
+//        System.out.println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+
+        System.out.println("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+        printTypeWriter("📚 Case Closed — at least, on paper. 🕵️‍♂️\n", 50);
+        printTypeWriter("🥪 You pieced together the perfect bite... but mysteries rarely stay solved.\n", 50);
+        printTypeWriter("🤔 Was it hunger you chased? Or the truth between the layers?\n", 50);
+        printTypeWriter("🏙️ Either way, the deli awaits your return.\n", 50);
+        printTypeWriter("🧠 Stay clever. 🐾 Stay hungry.\n", 50);
+
+        System.out.println("       / \\__");
+        System.out.println("      (    @\\___");
+        System.out.println("      /         O");
+        System.out.println("     /   (_____/");
+        System.out.println("    /_____/   ");
+        System.out.println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+
     }
 
     //intro message
@@ -112,7 +147,6 @@ public class UserInterface {
                     addChipProcess();
                     break;
                 case 4: //checkout
-                    printTypeWriter("\n📜 All evidence gathered. Time to file the report—or go deeper.\n", 50);
                     checkoutProcess();
                     break;
                 case 0: //cancel order
@@ -129,6 +163,8 @@ public class UserInterface {
 
     //checkout user order
     private static void checkoutProcess() {
+        printTypeWriter("\n📜 All evidence gathered. Time to file the report—or go deeper.\n", 50);
+
         //print list of products user ordered
         if(order.getProducts() == null || order.getProducts().isEmpty()) {
             printTypeWriter("⚠️ Your case file is still blank. Add some clues (or food) first.\n", 50);
@@ -198,6 +234,15 @@ public class UserInterface {
             else {
                 printTypeWriter("❌ That’s not on the list. Try again.\n", 50);
             }
+
+            // Add more chips?
+            System.out.println("\n🍟 Add another chip?");
+            System.out.println("🔥 Press [1] ➤ Yes, stack it up!");
+            System.out.println("❄️ Press [0] ➤ Nope, that’s enough crunch for now");
+            System.out.print("👉 Your choice: ");
+            chipSelected = checkValidatedMenuSelection(1);
+
+
         } while(chipSelected != 0);
 
         //add chips to products
@@ -561,10 +606,11 @@ public class UserInterface {
             System.out.println("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
 //            System.out.println("👋 Welcome to The Case of the Missing Sandwich!");
 
-            dotTypewriterInLine("👋 Welcome to ", 5); //welcome ...
+            dotTypewriterInLine("👋 Welcome to ", 3); //welcome ...
             printTypeWriter("The Case of the Missing Sandwich!\n", 50);
 
             System.out.println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+            isFirstTime = true;
         }
         else {
             System.out.println("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
@@ -573,6 +619,7 @@ public class UserInterface {
         }
         printTypeWriter("👣 You stand at the deli entrance. Where will your investigation begin?\n", 50);
         System.out.println("🛒 Press [1] ➤ New Order");
+        System.out.println("🎛️ Press [2] ➤ Animation Settings");
         System.out.println("🚪 Press [0] ➤ Exit");
     }
 

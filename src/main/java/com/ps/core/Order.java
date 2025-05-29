@@ -40,7 +40,7 @@ public class Order {
     public String generateReceipt() {
         StringBuilder receipt = new StringBuilder();
         double total = 0;
-        receipt.append("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+        receipt.append("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n");
         receipt.append("🕵️ Case File: Order Summary");
         receipt.append("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n");
 

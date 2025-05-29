@@ -1,0 +1,28 @@
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━🕵️ Case File: Order Summary
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📂 Sandwich Case: Custom Creation
+🥪 Sandwich Details:
+	🫓 Bread: White
+	📏 Size: 8 inches
+	🥬 Toppings:
+		• Lettuce
+		• Lettuce
+		• Steak (extra)
+		• American Cheese (extra)
+	🧂 Sauces:
+		• Vinaigrette
+	🍽️ Sides: Au Jus Sauce
+	🔥 Toasted: Yes ✅
+💵 Subtotal: $12.10
+-----------------------------------
+🥤Coca-Cola (Large)
+💵 Subtotal: $3.00
+-----------------------------------
+🍟Lays BBQ 
+💵 Subtotal: $1.50
+-----------------------------------
+📌 Case Conclusion
+===================================
+🧾 Total Amount Due: $16.60
+===================================
+🗂️ Report filed. A job well done, detective.

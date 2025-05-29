@@ -1,11 +1,16 @@
 package com.ps;
 
 public class UIEffects {
-
+    public static boolean animationsEnabled = true;
     /* User interface - Touch Up Methods*/
 
     //print text in typewriter style
     static void printTypeWriter(String text, int delay) {
+        if(!animationsEnabled) {
+            System.out.print(text);
+            return;
+        }
+
         for(char c: text.toCharArray()) { //convert string into char array
             System.out.print(c); //print each character
             try {
@@ -19,6 +24,11 @@ public class UIEffects {
 
     //print text then later delete/overwrite
     static void eraseTypeWriter(String text, int delay) {
+        if(!animationsEnabled) {
+            System.out.print(text);
+            return;
+        }
+
         for (int i = text.length() - 1; i >= 0; i--) {
             System.out.print("\b \b"); // backspace, space, backspace (to fully erase the char)
             try {
@@ -31,6 +41,10 @@ public class UIEffects {
 
     //loading animation
     static void spinner(int duration) {
+        if(!animationsEnabled) {
+            return;
+        }
+
         String[] spinnerChars = {"⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"};
 
         long end = System.currentTimeMillis() + duration;
@@ -44,11 +58,16 @@ public class UIEffects {
                 Thread.currentThread().interrupt();
             }
         }
+        System.out.print("\r ");  // print a space to overwrite spinner char
         System.out.print("\r"); // Clear spinner
     }
 
     //loading animation w/in lines w/ characters
     static void spinnerInLine(int duration) {
+        if(!animationsEnabled) {
+            return;
+        }
+
         String[] spinnerChars = {"⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"};
         long end = System.currentTimeMillis() + duration;
         int i = 0;
@@ -67,6 +86,10 @@ public class UIEffects {
 
     // Dot loader that erases the dots after each cycle
     static void dotTypewriterInLine(String message, int repeatCount) {
+        if(!animationsEnabled) {
+            return;
+        }
+
         printTypeWriter(message, 50); // Type out the message once
 
         for (int i = 0; i < repeatCount; i++) {
@@ -92,6 +115,11 @@ public class UIEffects {
 
     // Dot loader that keeps the 3 dots at the end
     static void dotTypewriterInLineKeepDots(String message, int repeatCount) {
+        if(!animationsEnabled) {
+            System.out.print("...");
+            return;
+        }
+
         printTypeWriter(message, 50); // Type out the message once
 
         for (int i = 0; i < repeatCount; i++) {
@@ -117,6 +145,10 @@ public class UIEffects {
 
     //wait for user to finish reading
     static void pause() {
+        if(!animationsEnabled) {
+            return;
+        }
+
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
