@@ -14,6 +14,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import static com.ps.UIEffects.*;
+
+
 
 public class UserInterface {
     private static final Scanner scanner = new Scanner(System.in);
@@ -31,8 +34,7 @@ public class UserInterface {
     private static void display() {
         int homeScreenCommand;
 
-        //TODO: dont forget to uncomment
-//        introMessage();
+        introMessage();
 
         do {
             printHomeScreenMenu();
@@ -45,6 +47,7 @@ public class UserInterface {
                     orderScreen();
                     break;
                 case 0: //exits from program
+                    outroMessage();
                     System.out.println("👋 Thanks for stopping by! Enjoy your meal!");
                     break;
                 default:
@@ -55,14 +58,18 @@ public class UserInterface {
 
     }
 
+    //outro message
+    private static void outroMessage() {
+    }
+
+    //intro message
     private static void introMessage() {
         System.out.println();
-        dotTypewriterInLineAnimationKeepDots("🌧️ The rain fell hard over Yokohama that night",3);
-//        printTypeWriter("\n🌧️ The rain fell hard over Yokohama that night...\n", 50);
+        dotTypewriterInLineKeepDots("🌧️ The rain fell hard over Yokohama that night",3);
 
         //"A sandwich — no, THE sandwich — vanished without a trace.\n"
         printTypeWriter("\nA sandwich ", 50);
-        spinnerInline(2000);
+        spinnerInLine(2000);
 
         printTypeWriter("no...", 200);
         try {
@@ -74,7 +81,7 @@ public class UserInterface {
         printTypeWriter("THE sandwich — vanished without a trace.\n", 50);
 
         //"No signs of forced entry. Just silence... and hunger.\n"
-        dotTypewriterInLineAnimationKeepDots("No signs of forced entry. Just silence", 3); //include ...
+        dotTypewriterInLineKeepDots("No signs of forced entry. Just silence", 3); //include ...
         printTypeWriter(" and hunger.\n", 50);
 
 
@@ -124,14 +131,14 @@ public class UserInterface {
     private static void checkoutProcess() {
         //print list of products user ordered
         if(order.getProducts() == null || order.getProducts().isEmpty()) {
-            System.out.println("⚠️ Your case file is still blank. Add some clues (or food) first.");
+            printTypeWriter("⚠️ Your case file is still blank. Add some clues (or food) first.\n", 50);
             return;
         }
 
         System.out.println(); //for spacing
         System.out.println(order.generateReceipt());
 
-        System.out.println("\n🧾 The evidence is all laid out... the final decision is yours.");
+        printTypeWriter("\n🧾 The evidence is all laid out... the final decision is yours.\n", 50);
         System.out.println("📦 Do you close the case with this order?"); //📦 Confirm and place your order?
         System.out.println("✅ Press [1] ➤ Yes, confirm order — case closed."); //✅ Press [1] ➤ Yes, confirm order
         System.out.println("🔁 Press [2] ➤ Not yet — there’s more to uncover."); //🔁 Press [2] ➤ No, still want to shop
@@ -143,18 +150,18 @@ public class UserInterface {
             switch (orderCommand) {
                 case 1: //confirm order
                     FileManager.writeReceipt(order);
-                    System.out.println("🎉 Case closed. Your receipt is filed, and justice (and hunger) is served.");
+                    printTypeWriter("🎉 Case closed. Your receipt is filed, and justice (and hunger) is served.\n", 50);
                     order = new Order();
                     break;
                 case 2: //continue to shop
-                    System.out.println("🔍 You tuck the case file under your arm and keep investigating.");
+                    printTypeWriter("🔍 You tuck the case file under your arm and keep investigating.\n", 50);
                     break;
                 case 3: //delete order
-                    System.out.println("🗑️ You shred the file. Sometimes, a fresh start is the only way.");
+                    printTypeWriter("🗑️ You shred the file. Sometimes, a fresh start is the only way.\n", 50);
                     order = new Order();
                     break;
                 default: //wrong input
-                    System.out.print("❌ Invalid selection, try again: ");
+                    printTypeWriter("❌ Invalid selection, try again: \n", 50);
                     orderCommand = checkIntInput();
             }
         } while(orderCommand != 1 && orderCommand != 2 && orderCommand != 3);
@@ -167,11 +174,12 @@ public class UserInterface {
         List<Chip> chosenChips = new ArrayList<>();
         int chipSelected;
         do {
-            System.out.println("\n🍟 The snack drawer creaks open — time to pick your crunchy accomplice.");
+            printTypeWriter("\n🍟 The snack drawer creaks open — time to pick your crunchy accomplice.\n", 50);
 
             System.out.println("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
             System.out.println("🍟 Fancy a quick snack to crack the case?"); //🍟 Want A Snack?
             System.out.println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+            spinner(2000);
             for (int i = 0; i < allChips.size(); i++) {
                 System.out.printf("🍟 Press [%d] ➤ %-15s\n", i + 1, allChips.get(i).getName());
             }
@@ -181,14 +189,14 @@ public class UserInterface {
             chipSelected = checkValidatedMenuSelection(allChips.size());
             if(chipSelected >= 1 && chipSelected <= allChips.size()) {
                 chosenChips.add(allChips.get(chipSelected - 1));
-                System.out.println("🥔 " + allChips.get(chipSelected - 1).getName() + " joined the lineup.");
+                printTypeWriter("🥔 " + allChips.get(chipSelected - 1).getName() + " joined the lineup.\n", 50);
             }
             else if (chipSelected == 0) {
-                System.out.println("🚪 You close the snack drawer. Back to business.");
+                printTypeWriter("🚪 You close the snack drawer. Back to business.\n", 50);
                 break;
             }
             else {
-                System.out.println("❌ That’s not on the list. Try again.");
+                printTypeWriter("❌ That’s not on the list. Try again.\n", 50);
             }
         } while(chipSelected != 0);
 
@@ -205,11 +213,12 @@ public class UserInterface {
 
         int drinkSelected;
         do {
-            System.out.println("\n🍹 You step up to the cooler—condensation trails like clues down the glass.");
+            printTypeWriter("\n🍹 You step up to the cooler—condensation trails like clues down the glass.\n", 50);
 
             System.out.println("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
             System.out.println("🥤 Need a drink to cool off or stay sharp?"); //🥤 Want a drink?
             System.out.println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+            spinner(2000);
             for (int i = 0; i < allDrinks.size(); i++) {
                 System.out.printf("🥤 Press [%d] ➤ %-15s\n", i + 1, allDrinks.get(i).getName());
             }
@@ -221,7 +230,7 @@ public class UserInterface {
                 Drink chosenDrink = allDrinks.get(drinkSelected - 1);
                 chosenDrinks.add(chosenDrink);
 
-                System.out.println("\n📏 How strong do you want this lead to be?"); //📏 What size would you like?
+                printTypeWriter("\n📏 How strong do you want this lead to be?\n", 50); //📏 What size would you like?
                 System.out.println("🟢 Press [1] ➤ Small — just a taste.");
                 System.out.println("🟡 Press [2] ➤ Medium — steady sipper.");
                 System.out.println("🔴 Press [3] ➤ Large — go all in.");
@@ -238,15 +247,15 @@ public class UserInterface {
                     chosenDrinkSize = "Large";
                 }
                 chosenDrink.updatePrice(chosenDrinkSize); //set up price with size of drink
-                System.out.println("💧 " + chosenDrink.getName() + " (" + chosenDrinkSize + ") added to your case file.");
+                printTypeWriter("💧 " + chosenDrink.getName() + " (" + chosenDrinkSize + ") added to your case file.\n", 50);
 
             }
             else if (drinkSelected == 0) {
-                System.out.println("🚪 You step away from the cooler. No more drinks—for now.");
+                printTypeWriter("🚪 You step away from the cooler. No more drinks—for now.\n", 50);
                 break;
             }
             else {
-                System.out.println("❌ Invalid selection. This lead's a dead end.");
+                printTypeWriter("❌ Invalid selection. This lead's a dead end.\n", 50);
             }
         } while(drinkSelected != 0);
 
@@ -285,10 +294,11 @@ public class UserInterface {
 
     //add signature sandwich
     private static void addSignatureSandwich() {
-        System.out.println("\n📁 A new lead appears—two sandwiches known to stir up trouble...");
+        printTypeWriter("\n📁 A new lead appears—two sandwiches known to stir up trouble...\n", 50);
         System.out.println("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
         System.out.println("🚀 Choose a Signature Sandwich:");
         System.out.println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+        spinner(2000);
         System.out.println("🥓 Press [1] ➤ BLT — Crisp. Clean. But never innocent.");
         System.out.println("🧀 Press [2] ➤ Philly Cheese Steak — Hot, heavy, and full of secrets.");
         System.out.println("🔙 Press [0] ➤ Back out. Too risky... for now.");
@@ -299,21 +309,21 @@ public class UserInterface {
 
         switch (sigCommand) {
             case 1: //BLT
-                System.out.println("\n🥓 You chose the BLT. A classic case—bacon, lettuce, tomato. But sometimes... simplicity hides intent.");
+                printTypeWriter("\n🥓 You chose the BLT. A classic case—bacon, lettuce, tomato. But sometimes... simplicity hides intent.\n", 50);
                 sandwich = new BLT();
                 break;
             case 2: //Philly cheese steak
-                System.out.println("\n🧀 You picked the Philly Cheese Steak. Hearty, hot, and likely to leave a mess at the scene.");
+                printTypeWriter("\n🧀 You picked the Philly Cheese Steak. Hearty, hot, and likely to leave a mess at the scene.\n", 50);
                 sandwich = new PhillyCheeseSteak();
                 break;
             case 0: //go back to sandwich options
-                System.out.println("🔙 You turn away. Something didn't feel right... returning to the sandwich board."); //🔙 Returning to sandwich options...
+                printTypeWriter("🔙 You turn away. Something didn't feel right... returning to the sandwich board.\n", 50); //🔙 Returning to sandwich options...
                 return;
             default:
         }
 
         //select side
-        System.out.println("\n🍲 One final detail—Au Jus. Some say it’s just a dip... others know better.");
+        printTypeWriter("\n🍲 One final detail—Au Jus. Some say it’s just a dip... others know better.\n", 50);
         System.out.println("✅ Press [1] ➤ Yes, add Au Jus—every clue counts.");
         System.out.println("❌ Press [0] ➤ No, we’ve got enough to go on.");
         System.out.print("👉 Your choice: ");
@@ -321,10 +331,12 @@ public class UserInterface {
         sandwich.setHasAuJus(sideSelected == 1);
 
         //print out the sandwich so far
-        System.out.println("\n📝 Case File: Signature Sandwich Identified.");
+        System.out.print("\n📝 Case File: Signature Sandwich Identified.");
+        spinnerInLine(2000);
+        System.out.println(); //newline for visual
         System.out.println(sandwich);
         System.out.printf("💰 Total: $%.2f\n", sandwich.calcPrice());
-        System.out.println("✅ Added to your growing investigation... stay sharp.\n");
+        printTypeWriter("✅ Added to your growing investigation... stay sharp.\n", 50);
 
         //final sandwich add to products
         order.addProduct(sandwich);
@@ -338,9 +350,11 @@ public class UserInterface {
         System.out.println("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
         System.out.println("🛠️ Crime Scene: Sandwich Assembly Station"); //🥪 Sandwich Creation Station 🛠️
         System.out.println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
-
+        spinner(2000);
         //select bread type
-        printTypeWriter("\n🥖 First: The foundation. What bread did the culprit favor?\n", 50); //🥖 Available Bread Types:
+        System.out.println("\n🥖 First: The foundation. What bread did the culprit favor?"); //🥖 Available Bread Types:
+        spinner(2000);
+
         List<String> allBreads = sandwich.getOfferedBread();
         //print all bread types
         for (int i = 0; i < allBreads.size(); i++) {
@@ -351,8 +365,11 @@ public class UserInterface {
         String chosenBread = allBreads.get(breadSelected - 1); //name of bread they selected
         sandwich.setSelectedBread(chosenBread); //put bread in sandwich
 
+        spinner(2000);
         //select size
         System.out.println("\n📏 How big was the crime? Choose your sandwich size:"); //📏 Choose your sandwich size:
+        spinner(2000);
+
         List<Integer> allSize = sandwich.getOfferedSizes();
         //print all bread size
         for (int i = 0; i < allSize.size(); i++) {
@@ -363,9 +380,10 @@ public class UserInterface {
         int chosenSize = allSize.get(sizeSelected - 1); //size of bread they selected
         sandwich.setSelectedSize(chosenSize); //put size in sandwich
 
-
+        spinner(2000);
         //select toppings
-        System.out.println("\n🔎 Toppings... the scene was messy. What clues were left behind?");
+        printTypeWriter("\n🔎 Toppings... the scene was messy.\n", 50);
+        spinner(2000);
         int toppingSelected;
         List<Topping> allRegularToppings = sandwich.getOfferedRegularToppings();
         List<Topping> allMeatToppings = sandwich.getOfferedMeatToppings();
@@ -374,7 +392,10 @@ public class UserInterface {
         List<Topping> chosenToppings = new ArrayList<>();
 
         do {
-            System.out.println("\n🥬 Add Toppings!");
+            System.out.println("\n🧠 Trust your gut — add any toppings you remember. ");
+            pause();
+            System.out.println("🧠 Just don’t go overboard: max 2 of each.");
+            spinner(2000);
 
             //print all toppings
             for (int i = 0; i < allRegularToppings.size(); i++) {
@@ -404,16 +425,16 @@ public class UserInterface {
             //allow to add topping if less than 2 toppings on sandwich, else reject + loop till exit
             if (count < 2) {
                 chosenToppings.add(chosenTopping);
-                System.out.println("➕ " + chosenTopping.getName() + " added. The mystery deepens...");
+                printTypeWriter("➕ " + chosenTopping.getName() + " added. The mystery deepens...\n", 50);
             } else {
-                System.out.println("🚫 No more than 2 of the same topping—the evidence must stay consistent.");
+                printTypeWriter("🚫 No more than 2 of the same topping—the evidence must stay consistent.\n", 50);
             }
 
 
         } while (toppingSelected != 0);
 
         //add meat
-        System.out.println("\n🍖 A bold move—was meat involved?"); //🍖 Special Meat Toppings!
+        printTypeWriter("\n🍖 A bold move—was meat involved?\n", 50); //🍖 Special Meat Toppings!
 
         //print all premium meat toppings
         for (int i = 0; i < allMeatToppings.size(); i++) {
@@ -426,7 +447,8 @@ public class UserInterface {
         if (toppingSelected != 0) {
             Topping chosenTopping = allMeatToppings.get(toppingSelected - 1); //topping selected
             chosenToppings.add(chosenTopping);
-            System.out.println("🕶️ Premium meat added. This thief had expensive taste...");
+            printTypeWriter("🕶️ Premium meat added. This thief had expensive taste...\n", 50);
+            spinner(2000);
 
             System.out.println("\n✨ Add extra meat?");
             System.out.println("✅ Press [1] ➤ Yes, double the damage");
@@ -440,7 +462,7 @@ public class UserInterface {
         }
 
         //add cheese
-        System.out.println("\n🧀 The cheddar trail—cheese, always a classic motive."); //🧀 Special Cheese Toppings!
+        printTypeWriter("\n🧀 The cheddar trail—cheese, always a classic motive.\n", 50); //🧀 Special Cheese Toppings!
 
         //print all premium cheese toppings
         for (int i = 0; i < allCheeseToppings.size(); i++) {
@@ -455,7 +477,8 @@ public class UserInterface {
         if (toppingSelected != 0) {
             Topping chosenTopping = allCheeseToppings.get(toppingSelected - 1); //topping selected
             chosenToppings.add(chosenTopping);
-            System.out.println("🧩 Cheese locked in. That’s one more piece of the puzzle...");
+            printTypeWriter("🧩 Cheese locked in. That’s one more piece of the puzzle...\n", 50);
+            spinner(2000);
 
             System.out.println("\n✨ Add extra cheese?");
             System.out.println("✅ Press [1] ➤ Yes, cheese it up");
@@ -472,7 +495,7 @@ public class UserInterface {
         sandwich.setSelectedToppings(chosenToppings);
 
         //select sauces
-        System.out.println("\n🍯 The final smear—what sauce ties it all together?"); //🍯 Add sauces
+        printTypeWriter("\n🍯 The final smear—what sauce ties it all together?\n", 50); //🍯 Add sauces
 
         List<String> chosenSauces = new ArrayList<>();
         List<String> allSauces = sandwich.getOfferedSauces(); //get all sauces
@@ -490,7 +513,7 @@ public class UserInterface {
 
 
         //select toasted
-        System.out.println("\n🔥 Toasted or not? Some like their clues crispy."); //🔥 Would you like your sandwich toasted?
+        printTypeWriter("\n🔥 Toasted or not? Some like their clues crispy.\n", 50); //🔥 Would you like your sandwich toasted?
         System.out.println("🔥 Press [1] ➤ Yes, toast it");
         System.out.println("❄️ Press [0] ➤ No, keep it cool");
         System.out.print("👉 Your choice: ");
@@ -498,7 +521,7 @@ public class UserInterface {
         sandwich.setToasted(toastSelected == 1); //put size in sandwich
 
         //select side
-        System.out.println("\n🍲 Final question—Au Jus on the side?");
+        printTypeWriter("\n🍲 Final question—Au Jus on the side?\n", 50);
         System.out.println("✅ Press [1] ➤ Add the dip");
         System.out.println("❌ Press [0] ➤ Skip it");
         System.out.print("👉 Your choice: ");
@@ -506,11 +529,12 @@ public class UserInterface {
         sandwich.setHasAuJus(sideSelected == 1);
 
         //print out the sandwich so far
-        System.out.println("\n📝 Case report filed:");
-
+        System.out.print("\n📝 Case report filed:");
+        spinnerInLine(2000);
+        System.out.println(); //newline for visual
         System.out.println(sandwich);
         System.out.printf("💰 Total: $%.2f\n", sandwich.calcPrice());
-        System.out.println("✅ Sandwich added to your active investigation.\n");
+        printTypeWriter("✅ Sandwich added to your active investigation.\n", 50);
 
         //final sandwich add to products
         order.addProduct(sandwich);
@@ -519,7 +543,7 @@ public class UserInterface {
 
     //order menu options
     private static void orderMenu() {
-        System.out.println("\n🕵️ The counter is yours to search. What clue... or craving... will lead you closer?");
+        printTypeWriter("\n🕵️ The counter is yours to search. What clue... or craving... will lead you closer?", 50);
 
         System.out.println("\n━━━━━━━━━━━━━━━━━━━");
         System.out.println("🛒 Build Your Order");
@@ -537,7 +561,7 @@ public class UserInterface {
             System.out.println("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
 //            System.out.println("👋 Welcome to The Case of the Missing Sandwich!");
 
-            dotTypewriterInLineAnimation("👋 Welcome to ", 5); //welcome ...
+            dotTypewriterInLine("👋 Welcome to ", 5); //welcome ...
             printTypeWriter("The Case of the Missing Sandwich!\n", 50);
 
             System.out.println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
@@ -623,133 +647,6 @@ public class UserInterface {
             throw new RuntimeException(e);
         }
     }
-
-    /* User interface - Touch Up Methods*/
-
-    //print text in typewriter style
-    private static void printTypeWriter(String text, int delay) {
-        for(char c: text.toCharArray()) { //convert string into char array
-            System.out.print(c); //print each character
-            try {
-                Thread.sleep(delay); //delay between characters
-            } catch (InterruptedException e) {
-                writeErrorsToLogsFile(e);
-            }
-
-        }
-    }
-
-    private static void eraseTypeWriter(String text, int delay) {
-        for (int i = text.length() - 1; i >= 0; i--) {
-            System.out.print("\b \b"); // backspace, space, backspace (to fully erase the char)
-            try {
-                Thread.sleep(delay);
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            }
-        }
-    }
-
-    public static void spinner(int duration) {
-        String[] spinnerChars = {"⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"};
-
-        long end = System.currentTimeMillis() + duration;
-        int i = 0;
-
-        while (System.currentTimeMillis() < end) {
-            System.out.print("\r" + spinnerChars[i++ % spinnerChars.length]);
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            }
-        }
-        System.out.print("\r"); // Clear spinner
-    }
-
-    private static void spinnerInline(int duration) {
-        String[] spinnerChars = {"⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"};
-        long end = System.currentTimeMillis() + duration;
-        int i = 0;
-
-        while (System.currentTimeMillis() < end) {
-            System.out.print(spinnerChars[i++ % spinnerChars.length]);
-            System.out.flush();
-            try {
-                Thread.sleep(150);
-            } catch (InterruptedException e) {
-                writeErrorsToLogsFile(e);
-               }
-            System.out.print("\b"); // backspace to overwrite just the spinner character
-        }
-    }
-
-    private static void inlineDotLoader(String message, int repeatCount, int delay) {
-        for (int r = 0; r < repeatCount; r++) {
-            for (int i = 1; i <= 3; i++) {
-                System.out.print("\r" + message + ".".repeat(i) + "   "); // spaces to overwrite
-                System.out.flush();
-                try {
-                    Thread.sleep(delay);
-                } catch (InterruptedException e) {
-                    writeErrorsToLogsFile(e);
-                }
-            }
-            // Clear just the dots after one cycle
-            System.out.print("\r" + message + "      ");
-        }
-        System.out.println(); // move to next line after done
-    }
-
-    private static void dotTypewriterInLineAnimation(String message, int repeatCount) {
-        printTypeWriter(message, 50); // Type out the message once
-
-        for (int i = 0; i < repeatCount; i++) {
-            for (int dots = 1; dots <= 3; dots++) {
-                System.out.print("\r" + message + ".".repeat(dots));
-                System.out.flush();
-
-                try {
-                    Thread.sleep(300); // Speed between dot steps
-                } catch (InterruptedException e) {
-                    writeErrorsToLogsFile(e);
-                }
-            }
-
-            // After 3 dots, erase the dots only (keep message)
-            System.out.print("\r" + message + "   \r" + message);
-            System.out.flush();
-        }
-
-        // Move to the next line when done
-//        System.out.println();
-    }
-
-    private static void dotTypewriterInLineAnimationKeepDots(String message, int repeatCount) {
-        printTypeWriter(message, 50); // Type out the message once
-
-        for (int i = 0; i < repeatCount; i++) {
-            for (int dots = 1; dots <= 3; dots++) {
-                System.out.print("\r" + message + ".".repeat(dots));
-                System.out.flush();
-
-                try {
-                    Thread.sleep(300); // Speed between dot steps
-                } catch (InterruptedException e) {
-                    writeErrorsToLogsFile(e);
-                }
-            }
-        }
-
-        // After all repeats, keep the message with 3 dots permanently
-        System.out.print("\r" + message + "...");
-        System.out.flush();
-
-        // Optionally, move to the next line when done
-        // System.out.println();
-    }
-
-
 
 
 

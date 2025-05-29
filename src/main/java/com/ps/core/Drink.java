@@ -10,15 +10,7 @@ public class Drink implements Product{
         this.name = name;
     }
 
-    //getters & setters
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
+    //update drink price by size
     public void updatePrice(String drinkSize) {
 
         switch (drinkSize) {
@@ -37,6 +29,15 @@ public class Drink implements Product{
             default:
         }
 
+    }
+
+    //getters & setters
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public double getPrice() {
