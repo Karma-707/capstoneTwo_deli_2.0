@@ -1,4 +1,4 @@
-package com.ps.core;
+package com.ps.core.sandwiches.toppings;
 
 public class PremiumTopping extends Topping{
     private double price;

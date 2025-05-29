@@ -1,9 +1,14 @@
-package com.ps.core;
+package com.ps.core.sandwiches;
+
+import com.ps.core.Product;
+import com.ps.core.sandwiches.toppings.PremiumTopping;
+import com.ps.core.sandwiches.toppings.RegularTopping;
+import com.ps.core.sandwiches.toppings.Topping;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class Sandwich implements Product{
+public class Sandwich implements Product {
     private String selectedBread;
     private int selectedSize;
     private List<Topping> selectedToppings;
@@ -51,9 +56,45 @@ public class Sandwich implements Product{
     public Sandwich() {
     }
 
+    //helper methods
+    private double getBreadPrice(int size) {
+        if(size == 4) {
+            return 5.50;
+        }
+        else if(size == 8) {
+            return 7.00;
+        }
+        else if(size == 12) {
+            return 8.50;
+        }
+        return 0;
+    }
 
+    private double getExtraCheeseFee(int size) {
+        if(size == 4) {
+            return 0.30;
+        }
+        else if(size == 8) {
+            return 0.60;
+        }
+        else if(size == 12) {
+            return 0.90;
+        }
+        return 0;
+    }
 
-
+    private double getExtraMeatFee(int size) {
+        if(size == 4) {
+            return 0.50;
+        }
+        else if(size == 8) {
+            return 1.00;
+        }
+        else if(size == 12) {
+            return 1.50;
+        }
+        return 0;
+    }
 
     //getters & setters
     public List<Integer> getOfferedSizes() {
@@ -171,82 +212,102 @@ public class Sandwich implements Product{
     @Override
     public double calcPrice() {
         double totalPrice = 0;
-        double breadPrice = 0;
+        double breadPrice = getBreadPrice(selectedSize);
         double cheesePrice = 0;
         double extraCheesePrice = 0;
         double meatPrice = 0;
         double extraMeatPrice = 0;
 
-        switch (selectedSize) {
-            case 4:
-                breadPrice = 5.50;
-                for(Topping topping: selectedToppings) {
-                    if(topping instanceof PremiumTopping premiumTopping) {
-                        //cheese
-                        if(premiumTopping.getName().toLowerCase().contains("cheese")) {
-                            cheesePrice = premiumTopping.getPrice(selectedSize);
-                            if(extraCheese) {
-                                extraCheesePrice += 0.30;
-                            }
-                        }
-                        //meat
-                        else {
-                            meatPrice = premiumTopping.getPrice(selectedSize);
-                            if(extraMeat) {
-                                extraMeatPrice += 0.50;
-                            }
-                        }
+        for(Topping topping: selectedToppings) {
+            if(topping instanceof PremiumTopping premiumTopping) {
+                boolean isCheese = premiumTopping.getName().toLowerCase().contains("cheese");
+                //cheese
+                if(isCheese) {
+                    cheesePrice = premiumTopping.getPrice(selectedSize);
+                    if(extraCheese) {
+                        extraCheesePrice += getExtraCheeseFee(selectedSize);
                     }
                 }
-
-                break;
-            case 8:
-                breadPrice = 7.00;
-                for(Topping topping: selectedToppings) {
-                    if(topping instanceof PremiumTopping premiumTopping) {
-                        //cheese
-                        if(premiumTopping.getName().toLowerCase().contains("cheese")) {
-                            cheesePrice = premiumTopping.getPrice(selectedSize);
-                            if(extraCheese) {
-                                extraCheesePrice += 0.60;
-                            }
-                        }
-                        //meat
-                        else {
-                            meatPrice = premiumTopping.getPrice(selectedSize);
-                            if(extraMeat) {
-                                extraMeatPrice += 1.00;
-                            }
-                        }
+                //meat
+                else {
+                    meatPrice = premiumTopping.getPrice(selectedSize);
+                    if(extraMeat) {
+                        extraMeatPrice += getExtraMeatFee(selectedSize);
                     }
                 }
-
-                break;
-            case 12:
-                breadPrice = 8.50;
-                for(Topping topping: selectedToppings) {
-                    if(topping instanceof PremiumTopping premiumTopping) {
-                        //cheese
-                        if(premiumTopping.getName().toLowerCase().contains("cheese")) {
-                            cheesePrice = premiumTopping.getPrice(selectedSize);
-                            if(extraCheese) {
-                                extraCheesePrice += 0.90;
-                            }
-                        }
-                        //meat
-                        else {
-                            meatPrice = premiumTopping.getPrice(selectedSize);
-                            if(extraMeat) {
-                                extraMeatPrice += 1.50;
-                            }
-                        }
-                    }
-                }
-
-                break;
-            default:
-                break;
+            }
         }
+
+//        switch (selectedSize) {
+//            case 4:
+//                breadPrice = 5.50;
+//                for(Topping topping: selectedToppings) {
+//                    if(topping instanceof PremiumTopping premiumTopping) {
+//                        //cheese
+//                        if(premiumTopping.getName().toLowerCase().contains("cheese")) {
+//                            cheesePrice = premiumTopping.getPrice(selectedSize);
+//                            if(extraCheese) {
+//                                extraCheesePrice += 0.30;
+//                            }
+//                        }
+//                        //meat
+//                        else {
+//                            meatPrice = premiumTopping.getPrice(selectedSize);
+//                            if(extraMeat) {
+//                                extraMeatPrice += 0.50;
+//                            }
+//                        }
+//                    }
+//                }
+//
+//                break;
+//            case 8:
+//                breadPrice = 7.00;
+//                for(Topping topping: selectedToppings) {
+//                    if(topping instanceof PremiumTopping premiumTopping) {
+//                        //cheese
+//                        if(premiumTopping.getName().toLowerCase().contains("cheese")) {
+//                            cheesePrice = premiumTopping.getPrice(selectedSize);
+//                            if(extraCheese) {
+//                                extraCheesePrice += 0.60;
+//                            }
+//                        }
+//                        //meat
+//                        else {
+//                            meatPrice = premiumTopping.getPrice(selectedSize);
+//                            if(extraMeat) {
+//                                extraMeatPrice += 1.00;
+//                            }
+//                        }
+//                    }
+//                }
+//
+//                break;
+//            case 12:
+//                breadPrice = 8.50;
+//                for(Topping topping: selectedToppings) {
+//                    if(topping instanceof PremiumTopping premiumTopping) {
+//                        //cheese
+//                        if(premiumTopping.getName().toLowerCase().contains("cheese")) {
+//                            cheesePrice = premiumTopping.getPrice(selectedSize);
+//                            if(extraCheese) {
+//                                extraCheesePrice += 0.90;
+//                            }
+//                        }
+//                        //meat
+//                        else {
+//                            meatPrice = premiumTopping.getPrice(selectedSize);
+//                            if(extraMeat) {
+//                                extraMeatPrice += 1.50;
+//                            }
+//                        }
+//                    }
+//                }
+//
+//                break;
+//            default:
+//                break;
+//        }
 
         //calculate total of sandwich
         totalPrice = breadPrice + cheesePrice + extraCheesePrice + meatPrice + extraMeatPrice;
@@ -258,6 +319,7 @@ public class Sandwich implements Product{
     public String toString() {
         StringBuilder sb = new StringBuilder();
 
+        sb.append("📂 Sandwich Case: Custom Creation\n");
         sb.append("🥪 Sandwich Details:");
         sb.append("\n\t🫓 Bread: ").append(selectedBread);
         sb.append("\n\t📏 Size: ").append(selectedSize).append(" inches");

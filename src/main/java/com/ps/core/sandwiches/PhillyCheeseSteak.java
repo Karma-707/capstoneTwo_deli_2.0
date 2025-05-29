@@ -1,4 +1,8 @@
-package com.ps.core;
+package com.ps.core.sandwiches;
+
+import com.ps.core.sandwiches.toppings.PremiumTopping;
+import com.ps.core.sandwiches.toppings.RegularTopping;
+import com.ps.core.sandwiches.toppings.Topping;
 
 import java.util.ArrayList;
 import java.util.List;

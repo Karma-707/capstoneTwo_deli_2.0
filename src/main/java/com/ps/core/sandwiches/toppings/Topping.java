@@ -1,4 +1,4 @@
-package com.ps.core;
+package com.ps.core.sandwiches.toppings;
 
 public abstract class Topping {
     private String name;

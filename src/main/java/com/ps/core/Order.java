@@ -41,7 +41,7 @@ public class Order {
         StringBuilder receipt = new StringBuilder();
         double total = 0;
         receipt.append("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
-        receipt.append("\n🧾 Here’s your order summary:");
+        receipt.append("🕵️ Case File: Order Summary");
         receipt.append("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n");
 
         for(Product product: products) {
@@ -54,15 +54,16 @@ public class Order {
 //            receipt.append(String.format(" $%.2f\n", price));
 
             // Append price line
-            receipt.append(String.format("\nSubtotal: $%.2f\n", price));
+            receipt.append(String.format("\n💵 Subtotal: $%.2f\n", price));
             receipt.append("-".repeat(35)).append("\n");
 
             total += price; //add to total of order
         }
-
+        receipt.append("📌 Case Conclusion\n");
         receipt.append("=".repeat(35)).append("\n");
-        receipt.append(String.format("Total: $%.2f\n", total));
+        receipt.append(String.format("🧾 Total Amount Due: $%.2f\n", total));
         receipt.append("=".repeat(35)).append("\n");
+        receipt.append("🗂️ Report filed. A job well done, detective.\n");
 
         return receipt.toString();
     }
