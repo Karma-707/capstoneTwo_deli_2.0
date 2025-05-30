@@ -390,6 +390,9 @@ public class UserInterface {
             System.out.print("👉 Your choice: ");
             drinkSelected = checkValidatedMenuSelection(1);
 
+            if(drinkSelected == 0) {
+                printTypeWriter("\n🚪 You step away from the cooler. No more drinks—for now.\n", 50);
+            }
 
         } while(drinkSelected != 0);
 
@@ -436,7 +439,9 @@ public class UserInterface {
             System.out.println("⏹️ Press [0] ➤ No, I'm good for now.");
             System.out.print("👉 Your choice: ");
             chipSelected = checkValidatedMenuSelection(1);
-
+            if(chipSelected == 0) {
+                printTypeWriter("\n🚪 You close the snack drawer. Back to business.\n", 50);
+            }
 
         } while(chipSelected != 0);
 
@@ -482,7 +487,7 @@ public class UserInterface {
                     order = new Order();
                     break;
                 default: //wrong input
-                    printTypeWriter("❌ Invalid selection, try again: \n", 50);
+                    printTypeWriter("❌ Invalid selection, try again: ", 50);
                     orderCommand = checkIntInput();
             }
         } while(orderCommand != 1 && orderCommand != 2 && orderCommand != 3);
@@ -693,8 +698,5 @@ public class UserInterface {
             throw new RuntimeException(e);
         }
     }
-
-
-
 
 }
