@@ -59,11 +59,10 @@ public class Order {
 
             total += price; //add to total of order
         }
-        receipt.append("📌 Case Conclusion\n");
-        receipt.append("=".repeat(35)).append("\n");
+//        receipt.append("📌 Case Conclusion\n");
+//        receipt.append("=".repeat(35)).append("\n");
         receipt.append(String.format("🧾 Total Amount Due: $%.2f\n", total));
         receipt.append("=".repeat(35)).append("\n");
-        receipt.append("🗂️ Report filed. A job well done, detective.\n");
 
         return receipt.toString();
     }

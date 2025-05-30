@@ -1,0 +1,27 @@
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🕵️ Case File: Order Summary
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🍟Lays Classic 
+💵 Subtotal: $1.50
+-----------------------------------
+📌 Signature Sandwich: BLT
+📂 Sandwich Case: Custom Creation
+🥪 Sandwich Details:
+	🫓 Bread: White
+	📏 Size: 8 inches
+	🥬 Toppings:
+		• Bacon
+		• Cheddar Cheese
+		• Lettuce
+		• Tomato
+	🧂 Sauces:
+		• Ranch
+	🍽️ Sides: None
+	🔥 Toasted: Yes ✅
+💵 Subtotal: $10.50
+-----------------------------------
+🥤Coca-Cola (Small)
+💵 Subtotal: $2.00
+-----------------------------------
+🧾 Total Amount Due: $14.00
+===================================

@@ -31,9 +31,10 @@ public class UserInterface {
 
     //deli main functions
     private static void display() {
+        clearLogsFile();
         int homeScreenCommand;
 
-//        introMessage();
+        introMessage();
 
         do {
             printHomeScreenMenu();
@@ -236,9 +237,9 @@ public class UserInterface {
             }
 
             // Add more chips?
-            System.out.println("\n🍟 Add another chip?");
-            System.out.println("🔥 Press [1] ➤ Yes, stack it up!");
-            System.out.println("❄️ Press [0] ➤ Nope, that’s enough crunch for now");
+            System.out.println("\n🍟 Craving more crunch?");
+            System.out.println("✅ Press [1] ➤ Yes, load it up!");
+            System.out.println("⏹️ Press [0] ➤ No, I'm good for now.");
             System.out.print("👉 Your choice: ");
             chipSelected = checkValidatedMenuSelection(1);
 
@@ -276,9 +277,9 @@ public class UserInterface {
                 chosenDrinks.add(chosenDrink);
 
                 printTypeWriter("\n📏 How strong do you want this lead to be?\n", 50); //📏 What size would you like?
-                System.out.println("🟢 Press [1] ➤ Small — just a taste.");
-                System.out.println("🟡 Press [2] ➤ Medium — steady sipper.");
-                System.out.println("🔴 Press [3] ➤ Large — go all in.");
+                System.out.println("✅ Press [1] ➤ Small  — just a taste.");
+                System.out.println("➡️ Press [2] ➤ Medium — steady sipper.");
+                System.out.println("⭐ Press [3] ➤ Large  — go all in.");
                 System.out.print("👉 Your choice: ");
                 int drinkSizeSelected = checkValidatedMenuSelection(3);
                 String chosenDrinkSize;
@@ -302,6 +303,15 @@ public class UserInterface {
             else {
                 printTypeWriter("❌ Invalid selection. This lead's a dead end.\n", 50);
             }
+
+            // Add more drinks?
+            System.out.println("\n➕ Another beverage for the case file?");
+            System.out.println("🧃 [1] ➤ Pour one more.");
+            System.out.println("🚫 [0] ➤ That's plenty for now.");
+            System.out.print("👉 Your choice: ");
+            drinkSelected = checkValidatedMenuSelection(1);
+
+
         } while(drinkSelected != 0);
 
         //add drinks to products
@@ -312,9 +322,9 @@ public class UserInterface {
 
     //add sandwich to order
     private static void addSandwichProcess() {
-        System.out.println("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+        System.out.println("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
         System.out.println("🥪 Suspect Profile: The Missing Sandwich");
-        System.out.println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+        System.out.println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
         System.out.println("🔨 Press [1] ➤ Reconstruct the sandwich piece by piece"); //build your own sandwich
         System.out.println("🌟 Press [2] ➤ Use a prebuilt 'signature sandwich' from evidence logs"); //prebuilt sandwich
         System.out.println("🔙 Press [0] ➤ Step away from the counter"); //go back
@@ -341,7 +351,7 @@ public class UserInterface {
     private static void addSignatureSandwich() {
         printTypeWriter("\n📁 A new lead appears—two sandwiches known to stir up trouble...\n", 50);
         System.out.println("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
-        System.out.println("🚀 Choose a Signature Sandwich:");
+        System.out.println("🚀 Choose a Signature Sandwich");
         System.out.println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
         spinner(2000);
         System.out.println("🥓 Press [1] ➤ BLT — Crisp. Clean. But never innocent.");
@@ -376,11 +386,11 @@ public class UserInterface {
         sandwich.setHasAuJus(sideSelected == 1);
 
         //print out the sandwich so far
-        System.out.print("\n📝 Case File: Signature Sandwich Identified.");
-        spinnerInLine(2000);
-        System.out.println(); //newline for visual
-        System.out.println(sandwich);
-        System.out.printf("💰 Total: $%.2f\n", sandwich.calcPrice());
+//        System.out.print("\n📝 Case File: Signature Sandwich Identified.");
+//        spinnerInLine(2000);
+//        System.out.println(); //newline for visual
+//        System.out.println(sandwich);
+//        System.out.printf("💰 Total: $%.2f\n", sandwich.calcPrice());
         printTypeWriter("✅ Added to your growing investigation... stay sharp.\n", 50);
 
         //final sandwich add to products
@@ -475,6 +485,12 @@ public class UserInterface {
                 printTypeWriter("🚫 No more than 2 of the same topping—the evidence must stay consistent.\n", 50);
             }
 
+            // Add more toppings?
+            System.out.println("\n➕ Another topping for the profile?");
+            System.out.println("🔍 [1] ➤ Add one more.");
+            System.out.println("🛑 [0] ➤ That’s enough.");
+            System.out.print("👉 Your choice: ");
+            toppingSelected = checkValidatedMenuSelection(1);
 
         } while (toppingSelected != 0);
 
@@ -574,11 +590,11 @@ public class UserInterface {
         sandwich.setHasAuJus(sideSelected == 1);
 
         //print out the sandwich so far
-        System.out.print("\n📝 Case report filed:");
-        spinnerInLine(2000);
-        System.out.println(); //newline for visual
-        System.out.println(sandwich);
-        System.out.printf("💰 Total: $%.2f\n", sandwich.calcPrice());
+//        System.out.print("\n📝 Case report filed:");
+//        spinnerInLine(2000);
+//        System.out.println(); //newline for visual
+//        System.out.println(sandwich);
+//        System.out.printf("💰 Total: $%.2f\n", sandwich.calcPrice());
         printTypeWriter("✅ Sandwich added to your active investigation.\n", 50);
 
         //final sandwich add to products
@@ -633,7 +649,7 @@ public class UserInterface {
 
             //don't allow -0 as an option
             if(userInput.equalsIgnoreCase("-0")) {
-                System.out.print("🚫 You can't enter 0 as a value... Try again: ");
+                System.out.print("🚫 You can't enter -0 as a value... Try again: ");
                 continue; //go back to top of loop
             }
 
@@ -652,7 +668,7 @@ public class UserInterface {
         }
     }
 
-
+    //validate selection within menu range
     private static int checkValidatedMenuSelection(int maxOption) {
         int selection;
 
