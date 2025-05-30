@@ -50,23 +50,17 @@ public class Order {
             //product details
             receipt.append(product);
 
-            //price of product
-//            receipt.append(String.format(" $%.2f\n", price));
-
-            // Append price line
+            //price of product line
             receipt.append(String.format("\n💵 Subtotal: $%.2f\n", price));
             receipt.append("-".repeat(35)).append("\n");
 
             total += price; //add to total of order
         }
-//        receipt.append("📌 Case Conclusion\n");
-//        receipt.append("=".repeat(35)).append("\n");
         receipt.append(String.format("🧾 Total Amount Due: $%.2f\n", total));
         receipt.append("=".repeat(35)).append("\n");
 
         return receipt.toString();
     }
-
 
 
     //getters & setters

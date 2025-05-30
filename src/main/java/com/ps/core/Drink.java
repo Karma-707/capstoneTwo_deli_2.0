@@ -12,7 +12,6 @@ public class Drink implements Product{
 
     //update drink price by size
     public void updatePrice(String drinkSize) {
-
         switch (drinkSize) {
             case "Small":
                 this.price = 2;
@@ -28,7 +27,6 @@ public class Drink implements Product{
                 break;
             default:
         }
-
     }
 
     //getters & setters

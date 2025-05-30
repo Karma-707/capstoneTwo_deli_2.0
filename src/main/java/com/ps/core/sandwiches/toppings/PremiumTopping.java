@@ -41,6 +41,4 @@ public class PremiumTopping extends Topping{
         this.price = price;
     }
 
-
-
 }

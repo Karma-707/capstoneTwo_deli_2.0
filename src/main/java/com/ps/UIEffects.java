@@ -2,6 +2,7 @@ package com.ps;
 
 public class UIEffects {
     public static boolean animationsEnabled = true;
+
     /* User interface - Touch Up Methods*/
 
     //print text in typewriter style
@@ -108,9 +109,6 @@ public class UIEffects {
             System.out.print("\r" + message + "   \r" + message);
             System.out.flush();
         }
-
-        // Move to the next line when done
-//        System.out.println();
     }
 
     // Dot loader that keeps the 3 dots at the end
@@ -138,9 +136,6 @@ public class UIEffects {
         // After all repeats, keep the message with 3 dots permanently
         System.out.print("\r" + message + "...");
         System.out.flush();
-
-        // Optionally, move to the next line when done
-        // System.out.println();
     }
 
     //wait for user to finish reading

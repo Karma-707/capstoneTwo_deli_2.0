@@ -16,8 +16,6 @@ import java.util.List;
 import java.util.Scanner;
 import static com.ps.UIEffects.*;
 
-
-
 public class UserInterface {
     private static final Scanner scanner = new Scanner(System.in);
     private static Order order;
@@ -60,265 +58,7 @@ public class UserInterface {
 
     }
 
-    //toggle animation settings
-    private static void animationSettingScreen() {
-        System.out.println("\n━━━━━━━━━━━━━━━━━━━━━");
-        System.out.println("🎛️ Animation Settings");
-        System.out.println("━━━━━━━━━━━━━━━━━━━━━");
-        System.out.println("✨ Press [1] ➤ Enable animations");
-        System.out.println("⏩ Press [0] ➤ Skip all animations");
-        System.out.print("👉 Your choice: ");
-        animationsEnabled = checkValidatedMenuSelection(1) == 1;
-
-    }
-
-    //outro message
-    private static void outroMessage() {
-//        System.out.println("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
-//        System.out.println("🎩 Case Closed, Detective.");
-//        System.out.println("Your skills in sandwich sleuthing have brought us closer to the truth...");
-//        System.out.println("Or at least filled our stomachs.");
-//        System.out.println("Remember: behind every great sandwich lies a mystery.");
-//        System.out.println("Until next time, stay sharp—and stay hungry. 🍞");
-//        System.out.println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
-
-        System.out.println("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
-        printTypeWriter("📚 Case Closed — at least, on paper. 🕵️‍♂️\n", 50);
-        printTypeWriter("🥪 You pieced together the perfect bite... but mysteries rarely stay solved.\n", 50);
-        printTypeWriter("🤔 Was it hunger you chased? Or the truth between the layers?\n", 50);
-        printTypeWriter("🏙️ Either way, the deli awaits your return.\n", 50);
-        printTypeWriter("🧠 Stay clever. 🐾 Stay hungry.\n", 50);
-
-        System.out.println("       / \\__");
-        System.out.println("      (    @\\___");
-        System.out.println("      /         O");
-        System.out.println("     /   (_____/");
-        System.out.println("    /_____/   ");
-        System.out.println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
-
-    }
-
-    //intro message
-    private static void introMessage() {
-        System.out.println();
-        dotTypewriterInLineKeepDots("🌧️ The rain fell hard over Yokohama that night",3);
-
-        //"A sandwich — no, THE sandwich — vanished without a trace.\n"
-        printTypeWriter("\nA sandwich ", 50);
-        spinnerInLine(2000);
-
-        printTypeWriter("no...", 200);
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            writeErrorsToLogsFile(e);
-        }
-        eraseTypeWriter("A sandwich no...", 100);
-        printTypeWriter("THE sandwich — vanished without a trace.\n", 50);
-
-        //"No signs of forced entry. Just silence... and hunger.\n"
-        dotTypewriterInLineKeepDots("No signs of forced entry. Just silence", 3); //include ...
-        printTypeWriter(" and hunger.\n", 50);
-
-
-        printTypeWriter("Time to investigate.\n", 50);
-    }
-
-
-    //order screen with menu options
-    private static void orderScreen() {
-        int orderMenuCommand;
-
-        do {
-            orderMenu();
-            System.out.print("👉 Your choice: ");
-            orderMenuCommand = checkValidatedMenuSelection(4);
-
-            switch (orderMenuCommand) {
-                case 1: //add sandwich
-                    printTypeWriter("\n🔍 The sandwich... that's where it all began. Maybe rebuilding it will reveal something.\n", 50);
-                    addSandwichProcess();
-                    break;
-                case 2: //add drink
-                    printTypeWriter("\n🧃 Witnesses say the thief was sipping something. Could the drink hold a clue?\n", 50);
-                    addDrinkProcess();
-                    break;
-                case 3: //add chips
-                    printTypeWriter("\n🍟 They say no one grabs chips without leaving fingerprints. Time to dust for prints.\n", 50);
-                    addChipProcess();
-                    break;
-                case 4: //checkout
-                    checkoutProcess();
-                    break;
-                case 0: //cancel order
-                    printTypeWriter("\n🗃️ You close the case file—for now. The trail’s gone cold... back to HQ.\n", 50);
-                    order = new Order();
-                    break;
-                default:
-                    System.out.println("⚠️ Invalid input, please try again");
-            }
-
-        } while(orderMenuCommand != 0);
-
-    }
-
-    //checkout user order
-    private static void checkoutProcess() {
-        printTypeWriter("\n📜 All evidence gathered. Time to file the report—or go deeper.\n", 50);
-
-        //print list of products user ordered
-        if(order.getProducts() == null || order.getProducts().isEmpty()) {
-            printTypeWriter("⚠️ Your case file is still blank. Add some clues (or food) first.\n", 50);
-            return;
-        }
-
-        System.out.println(); //for spacing
-        System.out.println(order.generateReceipt());
-
-        printTypeWriter("\n🧾 The evidence is all laid out... the final decision is yours.\n", 50);
-        System.out.println("📦 Do you close the case with this order?"); //📦 Confirm and place your order?
-        System.out.println("✅ Press [1] ➤ Yes, confirm order — case closed."); //✅ Press [1] ➤ Yes, confirm order
-        System.out.println("🔁 Press [2] ➤ Not yet — there’s more to uncover."); //🔁 Press [2] ➤ No, still want to shop
-        System.out.println("❌ Press [3] ➤ Scrap the file — start over."); //❌ Press [3] ➤ No, delete order
-        System.out.print("👉 Your choice: ");
-        int orderCommand = checkValidatedMenuSelection(3);
-
-        do {
-            switch (orderCommand) {
-                case 1: //confirm order
-                    FileManager.writeReceipt(order);
-                    printTypeWriter("🎉 Case closed. Your receipt is filed, and justice (and hunger) is served.\n", 50);
-                    order = new Order();
-                    break;
-                case 2: //continue to shop
-                    printTypeWriter("🔍 You tuck the case file under your arm and keep investigating.\n", 50);
-                    break;
-                case 3: //delete order
-                    printTypeWriter("🗑️ You shred the file. Sometimes, a fresh start is the only way.\n", 50);
-                    order = new Order();
-                    break;
-                default: //wrong input
-                    printTypeWriter("❌ Invalid selection, try again: \n", 50);
-                    orderCommand = checkIntInput();
-            }
-        } while(orderCommand != 1 && orderCommand != 2 && orderCommand != 3);
-
-    }
-
-    //add chip to order
-    private static void addChipProcess() {
-        List<Chip> allChips = order.getChipList();
-        List<Chip> chosenChips = new ArrayList<>();
-        int chipSelected;
-        do {
-            printTypeWriter("\n🍟 The snack drawer creaks open — time to pick your crunchy accomplice.\n", 50);
-
-            System.out.println("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
-            System.out.println("🍟 Fancy a quick snack to crack the case?"); //🍟 Want A Snack?
-            System.out.println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
-            spinner(2000);
-            for (int i = 0; i < allChips.size(); i++) {
-                System.out.printf("🍟 Press [%d] ➤ %-15s\n", i + 1, allChips.get(i).getName());
-            }
-            System.out.println("🔚 Press [0] ➤ No more distractions.");
-
-            System.out.print("👉 Select your chip: ");
-            chipSelected = checkValidatedMenuSelection(allChips.size());
-            if(chipSelected >= 1 && chipSelected <= allChips.size()) {
-                chosenChips.add(allChips.get(chipSelected - 1));
-                printTypeWriter("🥔 " + allChips.get(chipSelected - 1).getName() + " joined the lineup.\n", 50);
-            }
-            else if (chipSelected == 0) {
-                printTypeWriter("🚪 You close the snack drawer. Back to business.\n", 50);
-                break;
-            }
-            else {
-                printTypeWriter("❌ That’s not on the list. Try again.\n", 50);
-            }
-
-            // Add more chips?
-            System.out.println("\n🍟 Craving more crunch?");
-            System.out.println("✅ Press [1] ➤ Yes, load it up!");
-            System.out.println("⏹️ Press [0] ➤ No, I'm good for now.");
-            System.out.print("👉 Your choice: ");
-            chipSelected = checkValidatedMenuSelection(1);
-
-
-        } while(chipSelected != 0);
-
-        //add chips to products
-        for(Chip chip: chosenChips) {
-            order.addProduct(chip);
-        }
-    }
-
-    //add drink to order
-    private static void addDrinkProcess() {
-        List<Drink> allDrinks = order.getDrinkList();
-        List<Drink> chosenDrinks = new ArrayList<>();
-
-        int drinkSelected;
-        do {
-            printTypeWriter("\n🍹 You step up to the cooler—condensation trails like clues down the glass.\n", 50);
-
-            System.out.println("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
-            System.out.println("🥤 Need a drink to cool off or stay sharp?"); //🥤 Want a drink?
-            System.out.println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
-            spinner(2000);
-            for (int i = 0; i < allDrinks.size(); i++) {
-                System.out.printf("🥤 Press [%d] ➤ %-15s\n", i + 1, allDrinks.get(i).getName());
-            }
-            System.out.println("🔚 Press [0] ➤ You've seen enough.");
-
-            System.out.print("👉 Select your beverage: ");
-            drinkSelected = checkValidatedMenuSelection(allDrinks.size());
-            if(drinkSelected >= 1 && drinkSelected <= allDrinks.size()) {
-                Drink chosenDrink = allDrinks.get(drinkSelected - 1);
-                chosenDrinks.add(chosenDrink);
-
-                printTypeWriter("\n📏 How strong do you want this lead to be?\n", 50); //📏 What size would you like?
-                System.out.println("✅ Press [1] ➤ Small  — just a taste.");
-                System.out.println("➡️ Press [2] ➤ Medium — steady sipper.");
-                System.out.println("⭐ Press [3] ➤ Large  — go all in.");
-                System.out.print("👉 Your choice: ");
-                int drinkSizeSelected = checkValidatedMenuSelection(3);
-                String chosenDrinkSize;
-                if(drinkSizeSelected == 1) {
-                    chosenDrinkSize = "Small";
-                }
-                else if(drinkSizeSelected == 2) {
-                    chosenDrinkSize = "Medium";
-                }
-                else {
-                    chosenDrinkSize = "Large";
-                }
-                chosenDrink.updatePrice(chosenDrinkSize); //set up price with size of drink
-                printTypeWriter("💧 " + chosenDrink.getName() + " (" + chosenDrinkSize + ") added to your case file.\n", 50);
-
-            }
-            else if (drinkSelected == 0) {
-                printTypeWriter("🚪 You step away from the cooler. No more drinks—for now.\n", 50);
-                break;
-            }
-            else {
-                printTypeWriter("❌ Invalid selection. This lead's a dead end.\n", 50);
-            }
-
-            // Add more drinks?
-            System.out.println("\n➕ Another beverage for the case file?");
-            System.out.println("🧃 [1] ➤ Pour one more.");
-            System.out.println("🚫 [0] ➤ That's plenty for now.");
-            System.out.print("👉 Your choice: ");
-            drinkSelected = checkValidatedMenuSelection(1);
-
-
-        } while(drinkSelected != 0);
-
-        //add drinks to products
-        for(Drink drink: chosenDrinks) {
-            order.addProduct(drink);
-        }
-    }
+    /* Main Function Processes */
 
     //add sandwich to order
     private static void addSandwichProcess() {
@@ -345,56 +85,6 @@ public class UserInterface {
                 return;
             default:
         }
-    }
-
-    //add signature sandwich
-    private static void addSignatureSandwich() {
-        printTypeWriter("\n📁 A new lead appears—two sandwiches known to stir up trouble...\n", 50);
-        System.out.println("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
-        System.out.println("🚀 Choose a Signature Sandwich");
-        System.out.println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
-        spinner(2000);
-        System.out.println("🥓 Press [1] ➤ BLT — Crisp. Clean. But never innocent.");
-        System.out.println("🧀 Press [2] ➤ Philly Cheese Steak — Hot, heavy, and full of secrets.");
-        System.out.println("🔙 Press [0] ➤ Back out. Too risky... for now.");
-        System.out.print("👉 Your choice: ");
-        int sigCommand = checkValidatedMenuSelection(2);
-
-        Sandwich sandwich = null;
-
-        switch (sigCommand) {
-            case 1: //BLT
-                printTypeWriter("\n🥓 You chose the BLT. A classic case—bacon, lettuce, tomato. But sometimes... simplicity hides intent.\n", 50);
-                sandwich = new BLT();
-                break;
-            case 2: //Philly cheese steak
-                printTypeWriter("\n🧀 You picked the Philly Cheese Steak. Hearty, hot, and likely to leave a mess at the scene.\n", 50);
-                sandwich = new PhillyCheeseSteak();
-                break;
-            case 0: //go back to sandwich options
-                printTypeWriter("🔙 You turn away. Something didn't feel right... returning to the sandwich board.\n", 50); //🔙 Returning to sandwich options...
-                return;
-            default:
-        }
-
-        //select side
-        printTypeWriter("\n🍲 One final detail—Au Jus. Some say it’s just a dip... others know better.\n", 50);
-        System.out.println("✅ Press [1] ➤ Yes, add Au Jus—every clue counts.");
-        System.out.println("❌ Press [0] ➤ No, we’ve got enough to go on.");
-        System.out.print("👉 Your choice: ");
-        int sideSelected = checkValidatedMenuSelection(1); //grab user choice of side
-        sandwich.setHasAuJus(sideSelected == 1);
-
-        //print out the sandwich so far
-//        System.out.print("\n📝 Case File: Signature Sandwich Identified.");
-//        spinnerInLine(2000);
-//        System.out.println(); //newline for visual
-//        System.out.println(sandwich);
-//        System.out.printf("💰 Total: $%.2f\n", sandwich.calcPrice());
-        printTypeWriter("✅ Added to your growing investigation... stay sharp.\n", 50);
-
-        //final sandwich add to products
-        order.addProduct(sandwich);
     }
 
     //build custom sandwich
@@ -589,32 +279,218 @@ public class UserInterface {
         int sideSelected = checkValidatedMenuSelection(1); //grab user choice of side
         sandwich.setHasAuJus(sideSelected == 1);
 
-        //print out the sandwich so far
-//        System.out.print("\n📝 Case report filed:");
-//        spinnerInLine(2000);
-//        System.out.println(); //newline for visual
-//        System.out.println(sandwich);
-//        System.out.printf("💰 Total: $%.2f\n", sandwich.calcPrice());
+        //confirm sandwich order
         printTypeWriter("✅ Sandwich added to your active investigation.\n", 50);
 
         //final sandwich add to products
         order.addProduct(sandwich);
     }
 
+    //add signature sandwich
+    private static void addSignatureSandwich() {
+        printTypeWriter("\n📁 A new lead appears—two sandwiches known to stir up trouble...\n", 50);
+        System.out.println("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+        System.out.println("🚀 Choose a Signature Sandwich");
+        System.out.println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+        spinner(2000);
+        System.out.println("🥓 Press [1] ➤ BLT — Crisp. Clean. But never innocent.");
+        System.out.println("🧀 Press [2] ➤ Philly Cheese Steak — Hot, heavy, and full of secrets.");
+        System.out.println("🔙 Press [0] ➤ Back out. Too risky... for now.");
+        System.out.print("👉 Your choice: ");
+        int sigCommand = checkValidatedMenuSelection(2);
 
-    //order menu options
-    private static void orderMenu() {
-        printTypeWriter("\n🕵️ The counter is yours to search. What clue... or craving... will lead you closer?", 50);
+        Sandwich sandwich = null;
 
-        System.out.println("\n━━━━━━━━━━━━━━━━━━━");
-        System.out.println("🛒 Build Your Order");
-        System.out.println("━━━━━━━━━━━━━━━━━━━");
-        System.out.println("🥪 Press [1] ➤ Add Sandwich");
-        System.out.println("🥤 Press [2] ➤ Add Drink");
-        System.out.println("🍟 Press [3] ➤ Add Chips");
-        System.out.println("💳 Press [4] ➤ Checkout");
-        System.out.println("🔁 Press [0] ➤ Start Over");
+        switch (sigCommand) {
+            case 1: //BLT
+                printTypeWriter("\n🥓 You chose the BLT. A classic case—bacon, lettuce, tomato. But sometimes... simplicity hides intent.\n", 50);
+                sandwich = new BLT();
+                break;
+            case 2: //Philly cheese steak
+                printTypeWriter("\n🧀 You picked the Philly Cheese Steak. Hearty, hot, and likely to leave a mess at the scene.\n", 50);
+                sandwich = new PhillyCheeseSteak();
+                break;
+            case 0: //go back to sandwich options
+                printTypeWriter("🔙 You turn away. Something didn't feel right... returning to the sandwich board.\n", 50); //🔙 Returning to sandwich options...
+                return;
+            default:
+        }
+
+        //select side
+        printTypeWriter("\n🍲 One final detail—Au Jus. Some say it’s just a dip... others know better.\n", 50);
+        System.out.println("✅ Press [1] ➤ Yes, add Au Jus—every clue counts.");
+        System.out.println("❌ Press [0] ➤ No, we’ve got enough to go on.");
+        System.out.print("👉 Your choice: ");
+        int sideSelected = checkValidatedMenuSelection(1); //grab user choice of side
+        sandwich.setHasAuJus(sideSelected == 1);
+
+        //confirm sandwich order
+        printTypeWriter("✅ Added to your growing investigation... stay sharp.\n", 50);
+
+        //final sandwich add to products
+        order.addProduct(sandwich);
     }
+
+    //add drink to order
+    private static void addDrinkProcess() {
+        List<Drink> allDrinks = order.getDrinkList();
+        List<Drink> chosenDrinks = new ArrayList<>();
+
+        int drinkSelected;
+        do {
+            printTypeWriter("\n🍹 You step up to the cooler—condensation trails like clues down the glass.\n", 50);
+
+            System.out.println("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+            System.out.println("🥤 Need a drink to cool off or stay sharp?"); //🥤 Want a drink?
+            System.out.println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+            spinner(2000);
+            for (int i = 0; i < allDrinks.size(); i++) {
+                System.out.printf("🥤 Press [%d] ➤ %-15s\n", i + 1, allDrinks.get(i).getName());
+            }
+            System.out.println("🔚 Press [0] ➤ You've seen enough.");
+
+            System.out.print("👉 Select your beverage: ");
+            drinkSelected = checkValidatedMenuSelection(allDrinks.size());
+            if(drinkSelected >= 1 && drinkSelected <= allDrinks.size()) {
+                Drink chosenDrink = allDrinks.get(drinkSelected - 1);
+                chosenDrinks.add(chosenDrink);
+
+                printTypeWriter("\n📏 How strong do you want this lead to be?\n", 50); //📏 What size would you like?
+                System.out.println("✅ Press [1] ➤ Small  — just a taste.");
+                System.out.println("➡️ Press [2] ➤ Medium — steady sipper.");
+                System.out.println("⭐ Press [3] ➤ Large  — go all in.");
+                System.out.print("👉 Your choice: ");
+                int drinkSizeSelected = checkValidatedMenuSelection(3);
+                String chosenDrinkSize;
+                if(drinkSizeSelected == 1) {
+                    chosenDrinkSize = "Small";
+                }
+                else if(drinkSizeSelected == 2) {
+                    chosenDrinkSize = "Medium";
+                }
+                else {
+                    chosenDrinkSize = "Large";
+                }
+                chosenDrink.updatePrice(chosenDrinkSize); //set up price with size of drink
+                printTypeWriter("💧 " + chosenDrink.getName() + " (" + chosenDrinkSize + ") added to your case file.\n", 50);
+
+            }
+            else if (drinkSelected == 0) {
+                printTypeWriter("🚪 You step away from the cooler. No more drinks—for now.\n", 50);
+                break;
+            }
+            else {
+                printTypeWriter("❌ Invalid selection. This lead's a dead end.\n", 50);
+            }
+
+            // Add more drinks?
+            System.out.println("\n➕ Another beverage for the case file?");
+            System.out.println("🧃 [1] ➤ Pour one more.");
+            System.out.println("🚫 [0] ➤ That's plenty for now.");
+            System.out.print("👉 Your choice: ");
+            drinkSelected = checkValidatedMenuSelection(1);
+
+
+        } while(drinkSelected != 0);
+
+        //add drinks to products
+        for(Drink drink: chosenDrinks) {
+            order.addProduct(drink);
+        }
+    }
+
+    //add chip to order
+    private static void addChipProcess() {
+        List<Chip> allChips = order.getChipList();
+        List<Chip> chosenChips = new ArrayList<>();
+        int chipSelected;
+        do {
+            printTypeWriter("\n🍟 The snack drawer creaks open — time to pick your crunchy accomplice.\n", 50);
+
+            System.out.println("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+            System.out.println("🍟 Fancy a quick snack to crack the case?"); //🍟 Want A Snack?
+            System.out.println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+            spinner(2000);
+            for (int i = 0; i < allChips.size(); i++) {
+                System.out.printf("🍟 Press [%d] ➤ %-15s\n", i + 1, allChips.get(i).getName());
+            }
+            System.out.println("🔚 Press [0] ➤ No more distractions.");
+
+            System.out.print("👉 Select your chip: ");
+            chipSelected = checkValidatedMenuSelection(allChips.size());
+            if(chipSelected >= 1 && chipSelected <= allChips.size()) {
+                chosenChips.add(allChips.get(chipSelected - 1));
+                printTypeWriter("🥔 " + allChips.get(chipSelected - 1).getName() + " joined the lineup.\n", 50);
+            }
+            else if (chipSelected == 0) {
+                printTypeWriter("🚪 You close the snack drawer. Back to business.\n", 50);
+                break;
+            }
+            else {
+                printTypeWriter("❌ That’s not on the list. Try again.\n", 50);
+            }
+
+            // Add more chips?
+            System.out.println("\n🍟 Craving more crunch?");
+            System.out.println("✅ Press [1] ➤ Yes, load it up!");
+            System.out.println("⏹️ Press [0] ➤ No, I'm good for now.");
+            System.out.print("👉 Your choice: ");
+            chipSelected = checkValidatedMenuSelection(1);
+
+
+        } while(chipSelected != 0);
+
+        //add chips to products
+        for(Chip chip: chosenChips) {
+            order.addProduct(chip);
+        }
+    }
+
+    //checkout user order
+    private static void checkoutProcess() {
+        printTypeWriter("\n📜 All evidence gathered. Time to file the report—or go deeper.\n", 50);
+
+        //print list of products user ordered
+        if(order.getProducts() == null || order.getProducts().isEmpty()) {
+            printTypeWriter("⚠️ Your case file is still blank. Add some clues (or food) first.\n", 50);
+            return;
+        }
+
+        System.out.println(); //for spacing
+        System.out.println(order.generateReceipt());
+
+        printTypeWriter("\n🧾 The evidence is all laid out... the final decision is yours.\n", 50);
+        System.out.println("📦 Do you close the case with this order?"); //📦 Confirm and place your order?
+        System.out.println("✅ Press [1] ➤ Yes, confirm order — case closed."); //✅ Press [1] ➤ Yes, confirm order
+        System.out.println("🔁 Press [2] ➤ Not yet — there’s more to uncover."); //🔁 Press [2] ➤ No, still want to shop
+        System.out.println("❌ Press [3] ➤ Scrap the file — start over."); //❌ Press [3] ➤ No, delete order
+        System.out.print("👉 Your choice: ");
+        int orderCommand = checkValidatedMenuSelection(3);
+
+        do {
+            switch (orderCommand) {
+                case 1: //confirm order
+                    FileManager.writeReceipt(order);
+                    printTypeWriter("🎉 Case closed. Your receipt is filed, and justice (and hunger) is served.\n", 50);
+                    order = new Order();
+                    break;
+                case 2: //continue to shop
+                    printTypeWriter("🔍 You tuck the case file under your arm and keep investigating.\n", 50);
+                    break;
+                case 3: //delete order
+                    printTypeWriter("🗑️ You shred the file. Sometimes, a fresh start is the only way.\n", 50);
+                    order = new Order();
+                    break;
+                default: //wrong input
+                    printTypeWriter("❌ Invalid selection, try again: \n", 50);
+                    orderCommand = checkIntInput();
+            }
+        } while(orderCommand != 1 && orderCommand != 2 && orderCommand != 3);
+
+    }
+
+
+    /* Print Menus/Screens */
 
     //print home screen menu options
     private static void printHomeScreenMenu() {
@@ -637,6 +513,113 @@ public class UserInterface {
         System.out.println("🛒 Press [1] ➤ New Order");
         System.out.println("🎛️ Press [2] ➤ Animation Settings");
         System.out.println("🚪 Press [0] ➤ Exit");
+    }
+
+    //order menu options
+    private static void orderMenu() {
+        printTypeWriter("\n🕵️ The counter is yours to search. What clue... or craving... will lead you closer?", 50);
+
+        System.out.println("\n━━━━━━━━━━━━━━━━━━━");
+        System.out.println("🛒 Build Your Order");
+        System.out.println("━━━━━━━━━━━━━━━━━━━");
+        System.out.println("🥪 Press [1] ➤ Add Sandwich");
+        System.out.println("🥤 Press [2] ➤ Add Drink");
+        System.out.println("🍟 Press [3] ➤ Add Chips");
+        System.out.println("💳 Press [4] ➤ Checkout");
+        System.out.println("🔁 Press [0] ➤ Start Over");
+    }
+
+    //toggle animation settings
+    private static void animationSettingScreen() {
+        System.out.println("\n━━━━━━━━━━━━━━━━━━━━━");
+        System.out.println("🎛️ Animation Settings");
+        System.out.println("━━━━━━━━━━━━━━━━━━━━━");
+        System.out.println("✨ Press [1] ➤ Enable animations");
+        System.out.println("⏩ Press [0] ➤ Skip all animations");
+        System.out.print("👉 Your choice: ");
+        animationsEnabled = checkValidatedMenuSelection(1) == 1;
+
+    }
+
+    //order screen with menu options
+    private static void orderScreen() {
+        int orderMenuCommand;
+
+        do {
+            orderMenu();
+            System.out.print("👉 Your choice: ");
+            orderMenuCommand = checkValidatedMenuSelection(4);
+
+            switch (orderMenuCommand) {
+                case 1: //add sandwich
+                    printTypeWriter("\n🔍 The sandwich... that's where it all began. Maybe rebuilding it will reveal something.\n", 50);
+                    addSandwichProcess();
+                    break;
+                case 2: //add drink
+                    printTypeWriter("\n🧃 Witnesses say the thief was sipping something. Could the drink hold a clue?\n", 50);
+                    addDrinkProcess();
+                    break;
+                case 3: //add chips
+                    printTypeWriter("\n🍟 They say no one grabs chips without leaving fingerprints. Time to dust for prints.\n", 50);
+                    addChipProcess();
+                    break;
+                case 4: //checkout
+                    checkoutProcess();
+                    break;
+                case 0: //cancel order
+                    printTypeWriter("\n🗃️ You close the case file—for now. The trail’s gone cold... back to HQ.\n", 50);
+                    order = new Order();
+                    break;
+                default:
+                    System.out.println("⚠️ Invalid input, please try again");
+            }
+
+        } while(orderMenuCommand != 0);
+
+    }
+
+    //intro message
+    private static void introMessage() {
+        System.out.println();
+        dotTypewriterInLineKeepDots("🌧️ The rain fell hard over Yokohama that night",3);
+
+        //"A sandwich — no, THE sandwich — vanished without a trace.\n"
+        printTypeWriter("\nA sandwich ", 50);
+        spinnerInLine(2000);
+
+        printTypeWriter("no...", 200);
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            writeErrorsToLogsFile(e);
+        }
+        eraseTypeWriter("A sandwich no...", 100);
+        printTypeWriter("THE sandwich — vanished without a trace.\n", 50);
+
+        //"No signs of forced entry. Just silence... and hunger.\n"
+        dotTypewriterInLineKeepDots("No signs of forced entry. Just silence", 3); //include ...
+        printTypeWriter(" and hunger.\n", 50);
+
+
+        printTypeWriter("Time to investigate.\n", 50);
+    }
+
+    //outro message
+    private static void outroMessage() {
+        System.out.println("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+        printTypeWriter("📚 Case Closed — at least, on paper. 🕵️‍♂️\n", 50);
+        printTypeWriter("🥪 You pieced together the perfect bite... but mysteries rarely stay solved.\n", 50);
+        printTypeWriter("🤔 Was it hunger you chased? Or the truth between the layers?\n", 50);
+        printTypeWriter("🏙️ Either way, the deli awaits your return.\n", 50);
+        printTypeWriter("🧠 Stay clever. 🐾 Stay hungry.\n", 50);
+
+        System.out.println("       / \\__");
+        System.out.println("      (    @\\___");
+        System.out.println("      /         O");
+        System.out.println("     /   (_____/");
+        System.out.println("    /_____/   ");
+        System.out.println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+
     }
 
 

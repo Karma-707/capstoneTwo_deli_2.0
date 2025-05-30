@@ -27,7 +27,6 @@ public class PhillyCheeseSteak extends Sandwich{
         setSelectedSauces(sauces);
 
         setToasted(true);
-
     }
 
     @Override
