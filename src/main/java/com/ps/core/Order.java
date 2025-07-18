@@ -1,5 +1,7 @@
 package com.ps.core;
 
+import com.ps.core.sandwiches.Snack;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -25,6 +27,13 @@ public class Order {
             new Chip("Cheetos Crunchy"),
             new Chip("Ruffles Original"),
             new Chip("SunChips Garden Salsa")
+    );
+    public List<Snack> snackList = Arrays.asList(
+            new Snack("Nutter Buddy"),
+            new Snack("Chocolate Bar"),
+            new Snack("Powdered Donut"),
+            new Snack("Sunflower Seeds"),
+            new Snack("Hubba Bubba")
     );
 
     //constructor

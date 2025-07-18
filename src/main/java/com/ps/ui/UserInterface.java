@@ -5,6 +5,7 @@ import com.ps.core.*;
 import com.ps.core.sandwiches.BLT;
 import com.ps.core.sandwiches.PhillyCheeseSteak;
 import com.ps.core.sandwiches.Sandwich;
+import com.ps.core.sandwiches.Snack;
 import com.ps.core.sandwiches.toppings.Topping;
 
 import java.io.BufferedWriter;
@@ -452,6 +453,50 @@ public class UserInterface {
         }
     }
 
+    private static void addSnackProcess() {
+        List<Snack> allSnack = order.snackList;
+        List<Snack> chosenSnack = new ArrayList<>();
+        int snackSelected;
+        do {
+            printTypeWriter("\n Sweets with delightful flavors... grab one or two\n", 50);
+
+            System.out.println("\n---------------------");
+            System.out.println(" Sweets tooth.");
+            System.out.println("----------------------");
+            spinner(1000);
+
+            for (int i=0; i < allSnack.size(); i++) {
+                System.out.printf("Press [%d] > %-15s\n", i + 1, allSnack.get(i).getName());
+            }
+            System.out.println("Press [0] > No, my dentist wouldn't like it.");
+
+            System.out.println("Select your Snack: ");
+            snackSelected = checkValidatedMenuSelection(allSnack.size());
+            if (snackSelected >= 1 && snackSelected <= allSnack.size()) {
+                chosenSnack.add(allSnack.get(snackSelected - 1));
+                printTypeWriter(" " + allSnack.get(snackSelected -1).getName() + "More Cavities!\n",50);
+            } else if (snackSelected == 0) {
+                printTypeWriter("no snacks... sad.\n",50);
+                break;
+            }
+            else {
+                printTypeWriter("Thats not on the list try again.\n",50);
+            }
+
+            System.out.println("\n More Sweets?");
+            System.out.println("Press[1] > Yes");
+            System.out.println("Press[0] > No");
+            System.out.println("Your Choice: ");
+            snackSelected = checkValidatedMenuSelection(1);
+            if (snackSelected == 0) {
+                printTypeWriter("\n Done.", 50);
+            }
+        } while(snackSelected !=0);
+
+        for (Snack snack: chosenSnack) {
+            order.addProduct(snack);
+        }
+    }
     //checkout user order
     private static void checkoutProcess() {
         printTypeWriter("\n📜 All evidence gathered. Time to file the report—or go deeper.\n", 50);
@@ -531,7 +576,8 @@ public class UserInterface {
         System.out.println("🥪 Press [1] ➤ Add Sandwich");
         System.out.println("🥤 Press [2] ➤ Add Drink");
         System.out.println("🍟 Press [3] ➤ Add Chips");
-        System.out.println("💳 Press [4] ➤ Checkout");
+        System.out.println("🍟 Press [4] ➤ Add Snacks");
+        System.out.println("💳 Press [5] ➤ Checkout");
         System.out.println("🔁 Press [0] ➤ Start Over");
     }
 
@@ -569,7 +615,10 @@ public class UserInterface {
                     printTypeWriter("\n🍟 They say no one grabs chips without leaving fingerprints. Time to dust for prints.\n", 50);
                     addChipProcess();
                     break;
-                case 4: //checkout
+                case 4:
+                    printTypeWriter("\n  Oh the snacks looks very tasty... maybe you should grab one.\n", 50);
+                    addSnackProcess();
+                case 5: //checkout
                     checkoutProcess();
                     break;
                 case 0: //cancel order
@@ -583,6 +632,7 @@ public class UserInterface {
         } while(orderMenuCommand != 0);
 
     }
+
 
     //intro message
     private static void introMessage() {
