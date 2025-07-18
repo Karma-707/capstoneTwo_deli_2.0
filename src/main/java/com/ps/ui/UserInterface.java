@@ -1,5 +1,6 @@
-package com.ps;
+package com.ps.ui;
 
+import com.ps.FileManager;
 import com.ps.core.*;
 import com.ps.core.sandwiches.BLT;
 import com.ps.core.sandwiches.PhillyCheeseSteak;
@@ -14,7 +15,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import static com.ps.UIEffects.*;
+import static com.ps.ui.UIEffects.*;
 
 public class UserInterface {
     private static final Scanner scanner = new Scanner(System.in);

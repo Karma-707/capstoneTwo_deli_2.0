@@ -1,4 +1,4 @@
-package com.ps;
+package com.ps.ui;
 
 public class UIEffects {
     public static boolean animationsEnabled = true;
